@@ -10,15 +10,69 @@ const normalizeVocabulary = (vocabulary) => {
         antonyms: item.antonyms.map(a => a.trim()),
     }));
 };
-// Lưu dữ liệu vào file trong thư mục ứng dụng
+
 export const saveVocabularyToFile = async (data) => {
     try {
-        await RNFS.writeFile(appFilePath, JSON.stringify(data), 'utf8');
+        // Tạo một bản sao của dữ liệu ban đầu
+        const fullData = [...data];
+
+        // Duyệt qua từng từ vựng
+        data.forEach((vocab) => {
+            // Thêm từ đồng nghĩa
+            if (vocab.synonyms && Array.isArray(vocab.synonyms)) {
+                vocab.synonyms.forEach((synonym) => {
+                    const existingItem = fullData.find((item) => item.word === synonym);
+                    if (!existingItem) {
+                        // Nếu từ chưa tồn tại, thêm từ mới
+                        fullData.push({
+                            word: synonym,
+                            meanings: [],
+                            note: '',
+                            types: [],
+                            synonyms: [vocab.word], // Liên kết ngược
+                            antonyms: []
+                        });
+                    } else {
+                        // Nếu từ đã tồn tại, thêm liên kết ngược
+                        if (!existingItem.synonyms.includes(vocab.word)) {
+                            existingItem.synonyms.push(vocab.word);
+                        }
+                    }
+                });
+            }
+
+            // Thêm từ trái nghĩa
+            if (vocab.antonyms && Array.isArray(vocab.antonyms)) {
+                vocab.antonyms.forEach((antonym) => {
+                    const existingItem = fullData.find((item) => item.word === antonym);
+                    if (!existingItem) {
+                        // Nếu từ chưa tồn tại, thêm từ mới
+                        fullData.push({
+                            word: antonym,
+                            meanings: [],
+                            note: '',
+                            types: [],
+                            synonyms: [],
+                            antonyms: [vocab.word] // Liên kết ngược
+                        });
+                    } else {
+                        // Nếu từ đã tồn tại, thêm liên kết ngược
+                        if (!existingItem.antonyms.includes(vocab.word)) {
+                            existingItem.antonyms.push(vocab.word);
+                        }
+                    }
+                });
+            }
+        });
+
+        // Ghi toàn bộ dữ liệu vào file
+        await RNFS.writeFile(appFilePath, JSON.stringify(fullData), 'utf8');
         console.log(`File saved successfully to application directory: ${appFilePath}`);
     } catch (error) {
         console.error('Error writing file:', error);
     }
 };
+
 
 // Đọc dữ liệu từ file trong thư mục ứng dụng
 export const getVocabularyFromFile = async () => {
@@ -31,7 +85,8 @@ export const getVocabularyFromFile = async () => {
 
         const fileData = await RNFS.readFile(appFilePath, 'utf8');
         const vocabulary = JSON.parse(fileData);
-        return normalizeVocabulary(vocabulary); // Chuẩn hóa dữ liệu
+        // console.log("list từ : ", vocabulary);
+        return normalizeVocabulary(vocabulary);
     } catch (error) {
         console.error('Error reading file:', error);
         return [];
@@ -122,12 +177,19 @@ export const updateWord = async (updatedWord) => {
     }
 };
 
-// Tìm kiếm chính xác (trả về đúng 1 từ)
 export const searchExactWord = async (wordToFind) => {
     try {
+        const trimmedWordToFind = wordToFind.trim().toLowerCase(); // Loại bỏ khoảng trắng và chuyển về chữ thường
         const vocabulary = await getVocabularyFromFile();
+
         return (
-            vocabulary.find(word => word.word.trim().toLowerCase() === wordToFind.trim().toLowerCase()) || null
+            vocabulary.find(word => {
+                const wordText = word.word ? word.word.trim().toLowerCase() : ""; // Chuyển về chữ thường và kiểm tra `word`
+                const meanings = Array.isArray(word.meanings) ? word.meanings.map(meaning => meaning.trim().toLowerCase()) : []; // Chuẩn hóa `meanings` thành chữ thường
+
+                // Kiểm tra chính xác trong `word` hoặc bất kỳ `meanings` nào
+                return wordText === trimmedWordToFind || meanings.includes(trimmedWordToFind);
+            }) || null
         );
     } catch (error) {
         console.error('Error searching exact word:', error);
@@ -136,23 +198,43 @@ export const searchExactWord = async (wordToFind) => {
 };
 
 
-// Tìm kiếm tương đối (trả về danh sách các từ liên quan)
 export const searchSimilarWords = async (query) => {
     try {
-        const trimmedQuery = query.trim().toLowerCase(); // Loại bỏ khoảng trắng và chuyển về chữ thường
+        const trimmedQuery = query.trim().toLowerCase(); // Chuẩn hóa từ khóa tìm kiếm
         if (trimmedQuery === "") {
-            return []; // Trả về danh sách rỗng nếu query rỗng
+            return []; // Trả về danh sách rỗng nếu từ khóa rỗng
         }
 
+        const result1 = [];
         const vocabulary = await getVocabularyFromFile();
+        // Tìm kiếm theo nghĩa
+        for (let i = 0; i < vocabulary.length; i++) {
+            const word = vocabulary[i];
+            const listMeaning = word.meaning;
+            if (!listMeaning) {
+                continue;
+            }
+            for (let j = 0; j < listMeaning.length; j++) {
+                const meaning = listMeaning[j];
+                if (meaning.trim().toLowerCase().includes(trimmedQuery)) {
+                    result1.push(word);
+                    break;
+                }
+            }
+            
+        }
+        // Tìm kiếm theo từ
+        const result2 = [];
+        for (let i = 0; i < vocabulary.length; i++) {
+            const word = vocabulary[i];
+            if (word.word.trim().toLowerCase().includes(trimmedQuery)) {
+                result2.push(word);
+            }
+        }
+        // Kết hợp kết quả từ cả 2 tìm kiếm
+        const result = [...new Set([...result1, ...result2])];
 
-        // Kiểm tra từng phần tử trong vocabulary để tránh lỗi
-        return vocabulary.filter(word => {
-            const wordText = word.word ? word.word.toLowerCase() : ""; // Nếu word.word không tồn tại, dùng chuỗi rỗng
-            const meaningText = word.meaning ? word.meaning.toLowerCase() : ""; // Nếu word.meaning không tồn tại, dùng chuỗi rỗng
-
-            return wordText.includes(trimmedQuery) || meaningText.includes(trimmedQuery);
-        });
+        return result;
     } catch (error) {
         console.error('Error searching similar words:', error);
         return [];
@@ -249,7 +331,7 @@ export const addOrUpdateSynonym = async (word, synonym) => {
     try {
         const vocabulary = await getVocabularyFromFile();
 
-    
+
         // Tìm từ chính
         const wordToUpdate = vocabulary.find(
             item => item.word.trim().toLowerCase() === word.trim().toLowerCase()
@@ -301,12 +383,12 @@ export const addOrUpdateSynonym = async (word, synonym) => {
 export const addOrUpdateAntonym = async (word, antonym) => {
     try {
         const vocabulary = await getVocabularyFromFile();
-       
+
         // Kiểm tra từ chính
         const wordToUpdate = vocabulary.find(
             item => item.word.trim().toLowerCase() === word.trim().toLowerCase()
         );
-        
+
         if (!wordToUpdate) {
             console.error('Word not found in the vocabulary.');
             return false;

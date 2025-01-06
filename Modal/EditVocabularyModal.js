@@ -9,52 +9,41 @@ import {
     Dimensions,
     TouchableWithoutFeedback,
     Keyboard,
-
+    FlatList,
 } from "react-native";
-import { editVocabulary } from "../utils/fileSystem";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import color from "../Custom/Color";
-import { AddSquare, Edit, CloseSquare, PenClose } from "iconsax-react-native";
-const { width, height } = Dimensions.get("window");
-import CheckBox from '@react-native-community/checkbox';
+import { CloseSquare } from "iconsax-react-native";
 
-const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated }) => {
+const { width, height } = Dimensions.get("window");
+
+const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated, editVocabulary }) => {
     const [word, setWord] = useState(vocabulary.word);
     const [meaning, setMeaning] = useState(vocabulary.meaning);
-    const [type, setType] = useState(vocabulary.type || []); // Lưu loại từ là mảng
+    const [type, setType] = useState(vocabulary.types || []); // Lưu loại từ là mảng
     const [note, setNote] = useState(vocabulary.note);
-    const wordRef = useRef(null);
-    const meaningRef = useRef(null);
-    const typeRef = useRef(null);
-    const noteRef = useRef(null);
 
     const availableTypes = [
-        "Noun",
-        "Pronoun",
-        "Verb",
-        "Adjective",
-        "Adverb",
-        "Preposition",
-        "Conjunction",
-        "Interjection",
-        "Determiner",
-        "Article"
+        "Noun", "Pronoun", "Verb", "Adjective", "Adverb", 
+        "Preposition", "Conjunction", "Interjection", 
+        "Determiner", "Article"
     ];
 
     const handleKeyPress = (nextFieldRef) => {
-        nextFieldRef.current.focus();
+        nextFieldRef?.current?.focus();
     };
 
     useEffect(() => {
         if (vocabulary) {
             setWord(vocabulary.word || "");
             setMeaning(vocabulary.meaning || "");
-            setType(vocabulary.type || []);
+            setType(vocabulary.types || []);
             setNote(vocabulary.note || "");
         }
     }, [vocabulary]);
 
     const handleSave = async () => {
-        const updatedData = { word, meaning, type, note };
+        const updatedData = { word, meaning, types: type, note };
         const success = await editVocabulary(vocabulary.word, updatedData);
         if (success) {
             onUpdated();
@@ -65,77 +54,83 @@ const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated }) => {
     };
 
     // Hàm để chọn hoặc bỏ chọn loại từ
-    const toggleTypeSelection = (type) => {
-        setType(prevState =>
-            prevState.includes(type)
-                ? prevState.filter(item => item !== type)
-                : [...prevState, type]
+    const toggleTypeSelection = (selectedType) => {
+        setType((prevTypes) =>
+            prevTypes.includes(selectedType)
+                ? prevTypes.filter((t) => t !== selectedType) // Loại bỏ nếu đã chọn
+                : [...prevTypes, selectedType] // Thêm nếu chưa chọn
         );
     };
 
     return (
         <Modal visible={visible} transparent={true} animationType="slide">
-            <TouchableWithoutFeedback onPress={() => {
-                Keyboard.dismiss(); // Ẩn bàn phím khi nhấn ra ngoài modal
-            }}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalContent, styles.shadowEffect]}>
                         <View style={styles.title}>
-                            <TouchableOpacity onPress={onClose} >
+                            <TouchableOpacity onPress={onClose}>
                                 <CloseSquare size={30} color={color.red} />
                             </TouchableOpacity>
-
                             <Text style={styles.modalTitle}>Chỉnh sửa từ vựng</Text>
                         </View>
 
+                        {/* Từ Vựng */}
                         <View style={styles.rowDetail}>
                             <Text style={styles.label}>Từ Vựng</Text>
                             <TextInput
-                                ref={wordRef}
                                 style={[styles.detailInput, { color: color.lightRed }]}
                                 value={word}
                                 onChangeText={setWord}
-                                onSubmitEditing={() => handleKeyPress(meaningRef)} // Khi nhấn Enter, chuyển con trỏ đến trường "Nghĩa"
                             />
                         </View>
 
+                        {/* Nghĩa */}
                         <View style={styles.rowDetail}>
                             <Text style={styles.label}>Nghĩa</Text>
                             <TextInput
-                                ref={meaningRef}
                                 style={styles.detailInput}
                                 value={meaning}
                                 onChangeText={setMeaning}
-                                onSubmitEditing={() => handleKeyPress(typeRef)} // Khi nhấn Enter, chuyển con trỏ đến trường "Loại từ"
                             />
                         </View>
 
-                        <View style={styles.rowDetail}>
-                            <Text style={styles.label}>Loại từ</Text>
-                            <View style={styles.checkBoxContainer}>
-                                {availableTypes.map((item) => (
-                                    <View key={item} style={styles.checkBoxRow}>
-                                        <CheckBox
-                                            value={type.includes(item)}
-                                            onValueChange={() => toggleTypeSelection(item)}
+                        {/* Loại từ */}
+                        <View style={styles.rowDetailType}>
+                            <Text style={styles.labelType}>Loại từ</Text>
+                            <FlatList
+                                data={availableTypes}
+                                keyExtractor={(item) => item}
+                                numColumns={2}
+                                columnWrapperStyle={styles.checkboxRow}
+                                renderItem={({ item }) => (
+                                    <View style={styles.checkboxColumn}>
+                                        <BouncyCheckbox
+                                            size={25}
+                                            fillColor={color.lightBlue}
+                                            unfillColor={color.white}
+                                            text={item}
+                                            iconStyle={{  }}
+                                            innerIconStyle={{ borderWidth: 2 }}
+                                            textStyle={{ textDecorationLine: "none" , fontSize:width*0.035 }}
+                                            onPress={() => toggleTypeSelection(item)}
+                                            isChecked={type.includes(item)} // Kiểm tra nếu đã chọn
                                         />
-                                        <Text style={styles.checkBoxLabel}>{item}</Text>
                                     </View>
-                                ))}
-                            </View>
+                                )}
+                            />
                         </View>
 
+                        {/* Ghi chú */}
                         <View style={styles.rowDetail}>
                             <Text style={styles.label}>Ghi chú</Text>
                             <TextInput
-                                ref={noteRef}
                                 style={styles.detailInput}
                                 value={note}
                                 onChangeText={setNote}
-                                onSubmitEditing={handleSave} // Khi nhấn Enter, lưu dữ liệu
                             />
                         </View>
 
+                        {/* Nút Lưu */}
                         <View style={styles.buttonRow}>
                             <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
                                 <Text style={styles.buttonText}>Lưu</Text>
@@ -170,20 +165,29 @@ const styles = StyleSheet.create({
     },
     title: {
         flexDirection: "row",
+        alignItems: "center",
         marginBottom: height * 0.02,
     },
     modalTitle: {
         fontSize: height * 0.025,
         fontWeight: "bold",
-        marginBottom: height * 0.02,
         textAlign: "center",
-        marginLeft: width * 0.15,
+        flex: 1,
     },
     rowDetail: {
         flexDirection: "row",
-        justifyContent: "flex-start",
         alignItems: "center",
         marginBottom: height * 0.02,
+    },
+    rowDetailType: {
+        flexDirection: "row",
+      
+        marginBottom: height * 0.02,
+    },
+    labelType: {
+        fontSize: height * 0.018,
+        color: color.black,
+        
     },
     label: {
         fontSize: height * 0.018,
@@ -195,43 +199,36 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: width * 0.02,
         backgroundColor: color.white,
-        borderBottomColor: color.gray,
+        borderColor: color.gray,
         fontSize: height * 0.018,
-        paddingVertical: height * 0.01,
+        padding: height * 0.01,
         color: color.black,
         fontStyle: "italic",
     },
-    checkBoxContainer: {
-        flexDirection: "column",
-    },
-    checkBoxRow: {
+    checkboxRow: {
         flexDirection: "row",
-        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+       
     },
-    checkBoxLabel: {
-        fontSize: height * 0.018,
-        color: color.black,
-        marginLeft: 10,
+    checkboxColumn: {
+        flex: 1,
+        marginHorizontal: 5,
     },
     buttonRow: {
         flexDirection: "row",
         justifyContent: "center",
         marginTop: height * 0.02,
-        width: width * 0.8,
-        height: height * 0.07,
     },
     saveButton: {
         backgroundColor: "#4CAF50",
         paddingVertical: height * 0.015,
         paddingHorizontal: width * 0.05,
         borderRadius: width * 0.07,
-        width: width * 0.25,
-        height: height * 0.06,
     },
     buttonText: {
         color: color.white,
         fontWeight: "bold",
-        fontStyle: "italic",
         fontSize: height * 0.02,
         textAlign: "center",
     },

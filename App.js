@@ -14,7 +14,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Detail"
+        initialRouteName="Demo"
         screenOptions={{
           gestureEnabled: true, // Cho phép cử chỉ quay lại cho tất cả màn hình
         }}

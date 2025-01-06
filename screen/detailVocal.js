@@ -20,6 +20,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const [vocabulary, setVocabulary] = useState(null); // Từ hiện tại
     const [synonyms, setSynonyms] = useState([]); // Danh sách từ đồng nghĩa
     const [antonyms, setAntonyms] = useState([]); // Danh sách từ trái nghĩa
+    const [type, setType] = useState([]);
     const [newSynonym, setNewSynonym] = useState("");
     const [newAntonym, setNewAntonym] = useState("");
     const { width, height } = Dimensions.get("window");
@@ -27,7 +28,14 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const [searchResults, setSearchResults] = useState([]);
     const wordVocal = vocabulary ? vocabulary.word : "Unknown";
     const meaningVocal = vocabulary ? vocabulary.meaning : "Unknown";
-    const typeVocal = vocabulary ? vocabulary.type : "Unknown";
+    const sanitizedMeaningVocal = Array.isArray(meaningVocal)
+        ? meaningVocal.filter(Boolean) // Loại bỏ undefined, null, hoặc giá trị falsy
+        : [meaningVocal].filter(Boolean); // Đảm bảo luôn là mảng và lọc giá trị không hợp lệ
+
+    const meaningVocalFinal = (sanitizedMeaningVocal.length === 0)
+        ? " " // Hiển thị chuỗi rỗng nếu mảng không có giá trị hợp lệ
+        : ` ${sanitizedMeaningVocal.map(item => `[ ${item} ]`).join(' , ').trim()}`;
+
     const noteVocal = vocabulary ? vocabulary.note : "Unknown";
     const validSynonyms = synonyms.filter(item => item.trim() !== "");
     const validAntonyms = antonyms.filter(item => item.trim() !== "");
@@ -35,6 +43,18 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const [isAntonymModalVisible, setAntonymModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [historyStack, setHistoryStack] = useState([]);
+    const typeColors = {
+        "Noun": "#FF5733", // Cam đậm
+        "Pronoun": "#FFCC99", // Tím nhạt
+        "Verb": "#33FF57", // Xanh lá
+        "Adjective": "#3357FF", // Xanh dương
+        "Adverb": "#FF33A1", // Hồng
+        "Preposition": "#FFD133", // Vàng
+        "Conjunction": "#33FFF5", // Xanh ngọc
+        "Interjection": "#006666", // Xanh đậm
+        "Determiner": "#006600", // Xanh lá đậm
+        "Article": "#009900" // Xanh lá sáng
+    };
 
     const handleGoBackGesture = () => {
         if (historyStack.length > 0) {
@@ -73,8 +93,9 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const handleSearch = async (text) => {
         setSearchText(text);
         if (text.trim() !== '') {
+           
             const results = await searchSimilarWords(text);
-
+           
             setSearchResults(results);
         } else {
             setSearchResults([]);
@@ -97,7 +118,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
             <Text style={styles.resultTextMeaning}>{item.meaning}</Text>
         </TouchableOpacity>
     );
-
+    console.log("Vocabulary:", vocabulary);
     // Dữ liệu mẫu
     const sampleData = [
         {
@@ -113,10 +134,12 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const fetchRandomWord = async () => {
         try {
             const randomWordList = await getRandomVocabulary(2);
+           
             if (randomWordList.length > 0) {
                 const randomWord = randomWordList[0];
 
                 setVocabulary(randomWord);
+                setType(randomWord.types || [])
                 setSynonyms(randomWord.synonyms || []);
                 setAntonyms(randomWord.antonyms || []);
             } else {
@@ -131,6 +154,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
         const loadVocabulary = () => {
             if (route.params && route.params.vocabulary) {
                 setVocabulary(route.params.vocabulary);
+                setType(route.params.vocabulary.types || []);
                 setSynonyms(route.params.vocabulary.synonyms || []);
                 setAntonyms(route.params.vocabulary.antonyms || []);
             } else {
@@ -176,6 +200,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
 
                 // Điều hướng đến từ mới
                 setVocabulary(result);
+                setType(result.types || []);
                 setSynonyms(result.synonyms || []);
                 setAntonyms(result.antonyms || []);
             } else {
@@ -222,7 +247,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                 navigation.goBack();
             } else {
                 // Nếu không, điều hướng về HomePage
-                navigation.navigate('HomePage');
+                navigation.navigate('Add');
             }
         }
     };
@@ -297,11 +322,31 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                                 </View>
                                 <View style={styles.rowDetail}>
                                     <Text style={styles.label}>Nghĩa</Text>
-                                    <Text style={styles.detail}>{meaningVocal}</Text>
+                                    <Text style={styles.detail}>{meaningVocalFinal}</Text>
                                 </View>
                                 <View style={styles.rowDetail}>
                                     <Text style={styles.label}>Loại từ</Text>
-                                    <Text style={styles.detail}>{typeVocal}</Text>
+
+                                    <View style={{ width: width * 0.55 }}>
+                                        <FlatList
+                                            data={type} // Danh sách các loại từ, ví dụ ['Noun', 'Verb', 'Adjective']
+                                            keyExtractor={(item, index) => index.toString()} // Key duy nhất cho mỗi phần tử
+                                            horizontal={true} // Cuộn ngang
+                                            showsHorizontalScrollIndicator={false} // Ẩn thanh cuộn ngang
+                                            renderItem={({ item }) => {
+                                                const itemColor = typeColors[item] || "#000000"; // Mặc định màu đen nếu không tìm thấy
+                                                return (
+                                                    <View style={{ padding: 5 }}>
+                                                        <Text style={{ color: itemColor, fontStyle: "italic", fontWeight: "bold" }}>
+                                                            {item}
+                                                        </Text>
+                                                    </View>
+                                                );
+                                            }}
+                                        />
+                                    </View>
+
+
                                 </View>
                                 <View style={styles.rowDetail}>
                                     <Text style={styles.label}>Ghi chú</Text>
