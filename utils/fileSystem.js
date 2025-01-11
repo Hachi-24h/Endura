@@ -457,3 +457,33 @@ export const editVocabulary = async (originalWord, updatedData) => {
         return false;
     }
 };
+
+// Tìm để lm question
+export const getUnrelatedWords = async (wordToCheck, count = 3) => {
+    try {
+        const vocabulary = await getVocabularyFromFile();
+
+        // Tìm từ kiểm tra
+        const targetWord = vocabulary.find(
+            (item) => item.word.trim().toLowerCase() === wordToCheck.trim().toLowerCase()
+        );
+
+        if (!targetWord) {
+            console.error('Word to check not found in vocabulary.');
+            return [];
+        }
+
+        // Lọc từ không liên quan
+        const unrelatedWords = vocabulary.filter((item) => {
+            const isSynonym = targetWord.synonyms?.includes(item.word);
+            const isAntonym = targetWord.antonyms?.includes(item.word);
+            return item.word !== targetWord.word && !isSynonym && !isAntonym;
+        });
+
+        // Trộn ngẫu nhiên và lấy số lượng cần thiết
+        return unrelatedWords.sort(() => 0.5 - Math.random()).slice(0, count);
+    } catch (error) {
+        console.error('Error fetching unrelated words:', error);
+        return [];
+    }
+};

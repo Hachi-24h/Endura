@@ -8,14 +8,14 @@ import {
     StyleSheet,
     View,
     Alert,
-    KeyboardAvoidingView,TouchableOpacity
+    KeyboardAvoidingView, TouchableOpacity
 } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox"; // Thư viện hỗ trợ checkbox
 import { isFileExists, saveVocabularyToFile, getVocabularyFromFile } from '../utils/fileSystem'; // Đảm bảo sử dụng react-native-fs
 import Vocabulary from '../model/VocabularyModel';  // Import model từ vựng
-import { Back, CloudNotif } from 'iconsax-react-native';
-
-const HomePage = ({navigation}) => {
+import { Back, BluetoothRectangle, CloudNotif } from 'iconsax-react-native';
+import { updateUserSettings } from '../utils/userSettings';
+const HomePage = ({ navigation }) => {
     const [word, setWord] = useState('');
     const [meaning, setMeaning] = useState('');
     const [note, setNote] = useState('');
@@ -81,7 +81,7 @@ const HomePage = ({navigation}) => {
                 .map((antonym) => antonym.trim())
                 .filter((antonym) => antonym.length > 0)
             : [];
-            const ListMeaning = meaning.trim().split(',').map((meaning) => meaning.trim());
+        const ListMeaning = meaning.trim().split(',').map((meaning) => meaning.trim());
         // Tạo đối tượng từ vựng mới từ model
         const newVocabulary = new Vocabulary(
             word.trim(),
@@ -107,18 +107,37 @@ const HomePage = ({navigation}) => {
         setSynonymsList('');
         setAntonymsList('');
     };
-
-
+    const handlePress = async () => {
+        try {
+            // Cập nhật trạng thái hasLoggedInBefore thành false
+            await updateUserSettings({ hasLoggedInBefore: false });
+    
+            console.log("First login state reset successfully.");
+    
+            // Chuyển hướng hoặc tải lại màn hình
+            navigation.replace('Detail'); // Thay 'Detail' bằng tên màn hình bạn muốn
+        } catch (error) {
+            console.error("Error resetting first login state:", error);
+            Alert.alert("Error", "An error occurred while resetting the state.");
+        }
+    };
+    
 
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
-            >   
-            <TouchableOpacity onPress={() => navigation.navigate('Detail')} >
-                <CloudNotif size={30} color="#6c63ff" />
-            </TouchableOpacity>
+            >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Detail')} >
+                        <CloudNotif size={30} color="#6c63ff" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handlePress} style={styles.button}>
+                        <BluetoothRectangle size={30} color="#6c63ff" />
+                    </TouchableOpacity>
+                </View>
+
                 <FlatList
                     ListHeaderComponent={(
                         <View style={styles.inputContainer}>

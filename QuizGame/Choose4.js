@@ -1,147 +1,125 @@
-import React, { useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
-
-// Lấy chiều rộng và chiều cao màn hình
-const { width, height } = Dimensions.get("window");
+import React, { useState, useEffect } from "react";
+import { Modal, View, Text, TouchableOpacity } from "react-native";
 import styles from "../Css/choose4";
+import color from "../Custom/Color";
+import { ArrowCircleRight2 } from "iconsax-react-native";
+import { getUnrelatedWords } from "../utils/fileSystem";
 
-const QuestionModal = ({ isVisible, data, onClose }) => {
-  const [question, setQuestion] = useState(null); // Lưu câu hỏi hiện tại
-  const [answers, setAnswers] = useState([]); // Lưu danh sách đáp án
-  const [correctAnswer, setCorrectAnswer] = useState(null); // Lưu đáp án đúng
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // Lưu đáp án đã chọn
-  const [showNextButton, setShowNextButton] = useState(false); // Hiển thị nút "Tiếp theo"
+const QuestionModal = ({ isVisible, data, onClose, testType }) => {
+  const [question, setQuestion] = useState(null);
+  const [answers, setAnswers] = useState([]);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showNextButton, setShowNextButton] = useState(false);
 
-  // Hàm random câu hỏi
-  const generateQuestion = () => {
+  // Shuffle array elements
+  const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+
+  const generateQuestion = async () => {
     if (!data || data.length === 0) return;
 
     const randomIndex = Math.floor(Math.random() * data.length);
     const selectedWord = data[randomIndex];
 
-    // Chọn ngẫu nhiên loại câu hỏi
-    const questionTypes = ["word", "meaning", "synonym", "antonym"];
-    const questionType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+    // Determine the question type
+    const questionType =
+      testType === 0
+        ? ["word", "meaning", "synonym", "antonym"][
+            Math.floor(Math.random() * 4)
+          ]
+        : ["word", "meaning", "synonym", "antonym"][testType - 1];
 
-    if (questionType === "word") {
-      // Câu hỏi về từ
-      const questionText = `Từ vựng: "${selectedWord.word}"`;
-      const randomMeaningIndex = Math.floor(
-        Math.random() * selectedWord.meaning.length
-      );
-      const correctMeaning = selectedWord.meaning[randomMeaningIndex];
-
-      const wrongMeanings = data
-        .flatMap((word) => word.meaning)
-        .filter((meaning) => meaning !== correctMeaning);
-
-      const shuffledWrongMeanings = wrongMeanings
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
-
-      const allAnswers = shuffleArray([correctMeaning, ...shuffledWrongMeanings]);
-
-      setQuestion(questionText);
-      setAnswers(allAnswers);
-      setCorrectAnswer(correctMeaning);
-    } else if (questionType === "meaning") {
-      // Câu hỏi về nghĩa
-      const randomMeaningIndex = Math.floor(
-        Math.random() * selectedWord.meaning.length
-      );
-      const questionText = `Nghĩa: "${selectedWord.meaning[randomMeaningIndex]}"`;
-      const correctWord = selectedWord.word;
-
-      const wrongWords = data
-        .filter((word) => word.word !== correctWord)
-        .map((word) => word.word);
-
-      const shuffledWrongWords = wrongWords
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
-
-      const allAnswers = shuffleArray([correctWord, ...shuffledWrongWords]);
-
-      setQuestion(questionText);
-      setAnswers(allAnswers);
-      setCorrectAnswer(correctWord);
-    } else if (questionType === "synonym" && selectedWord.synonyms?.length > 0) {
-      // Câu hỏi về đồng nghĩa
-      const questionText = `Tìm từ đồng nghĩa với: "${selectedWord.word}"`;
-      const correctSynonym = selectedWord.synonyms[0];
-
-      const wrongSynonyms = data
-        .flatMap((word) => word.synonyms || [])
-        .filter((synonym) => synonym !== correctSynonym);
-
-      const shuffledWrongSynonyms = wrongSynonyms
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
-
-      const allAnswers = shuffleArray([correctSynonym, ...shuffledWrongSynonyms]);
-
-      setQuestion(questionText);
-      setAnswers(allAnswers);
-      setCorrectAnswer(correctSynonym);
-    } else if (questionType === "antonym" && selectedWord.antonyms?.length > 0) {
-      // Câu hỏi về trái nghĩa
-      const questionText = `Tìm từ trái nghĩa với: "${selectedWord.word}"`;
-      const correctAntonym = selectedWord.antonyms[0];
-
-      const wrongAntonyms = data
-        .flatMap((word) => word.antonyms || [])
-        .filter((antonym) => antonym !== correctAntonym);
-
-      const shuffledWrongAntonyms = wrongAntonyms
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
-
-      const allAnswers = shuffleArray([correctAntonym, ...shuffledWrongAntonyms]);
-
-      setQuestion(questionText);
-      setAnswers(allAnswers);
-      setCorrectAnswer(correctAntonym);
-    } else {
-      // Nếu không có đồng nghĩa hoặc trái nghĩa, gọi lại hàm để random lại
-      generateQuestion();
-      return;
+    switch (questionType) {
+      case "word": {
+        const questionText = `Từ vựng: \"${selectedWord.word}\"`;
+        const correctMeaning = selectedWord.meaning[0];
+        const unrelatedWords = await getUnrelatedWords(selectedWord.word, 3);
+        const wrongMeanings = unrelatedWords.map((item) => item.meaning[0]);
+        const allAnswers = shuffleArray([
+          correctMeaning,
+          ...wrongMeanings,
+        ]);
+        setQuestion(questionText);
+        setAnswers(allAnswers);
+        setCorrectAnswer(correctMeaning);
+        break;
+      }
+      case "meaning": {
+        const questionText = `Nghĩa: \"${selectedWord.meaning[0]}\"`;
+        const correctWord = selectedWord.word;
+        const unrelatedWords = await getUnrelatedWords(selectedWord.word, 3);
+        const wrongWords = unrelatedWords.map((item) => item.word);
+        const allAnswers = shuffleArray([correctWord, ...wrongWords]);
+        setQuestion(questionText);
+        setAnswers(allAnswers);
+        setCorrectAnswer(correctWord);
+        break;
+      }
+      case "synonym": {
+        if (selectedWord.synonyms?.length > 0) {
+          const questionText = `Đồng nghĩa với: \"${selectedWord.word}\"`;
+          const correctSynonym = selectedWord.synonyms[0];
+          const unrelatedWords = await getUnrelatedWords(selectedWord.word, 3);
+          const wrongSynonyms = unrelatedWords.map((item) => item.word);
+          const allAnswers = shuffleArray([
+            correctSynonym,
+            ...wrongSynonyms,
+          ]);
+          setQuestion(questionText);
+          setAnswers(allAnswers);
+          setCorrectAnswer(correctSynonym);
+        } else {
+          generateQuestion();
+        }
+        break;
+      }
+      case "antonym": {
+        if (selectedWord.antonyms?.length > 0) {
+          const questionText = `Trái nghĩa với: \"${selectedWord.word}\"`;
+          const correctAntonym = selectedWord.antonyms[0];
+          const unrelatedWords = await getUnrelatedWords(selectedWord.word, 3);
+          const wrongAntonyms = unrelatedWords.map((item) => item.word);
+          const allAnswers = shuffleArray([
+            correctAntonym,
+            ...wrongAntonyms,
+          ]);
+          setQuestion(questionText);
+          setAnswers(allAnswers);
+          setCorrectAnswer(correctAntonym);
+        } else {
+          generateQuestion();
+        }
+        break;
+      }
+      default:
+        break;
     }
 
     setSelectedAnswer(null);
     setShowNextButton(false);
   };
 
-  // Hàm xử lý khi chọn đáp án
+  useEffect(() => {
+    if (isVisible) {
+      (async () => {
+        await generateQuestion();
+      })();
+    }
+  }, [isVisible]);
+
   const handleAnswerPress = (answer) => {
     setSelectedAnswer(answer);
     setShowNextButton(true);
   };
 
-  // Hàm shuffle mảng
-  const shuffleArray = (array) => {
-    return array.sort(() => Math.random() - 0.5);
-  };
-
-  // Gọi generateQuestion khi modal mở
-  React.useEffect(() => {
-    if (isVisible) {
-      generateQuestion();
-    }
-  }, [isVisible]);
-
   return (
     <Modal visible={isVisible} animationType="slide" transparent={true}>
       <View style={styles.modalContainer}>
         <View style={styles.content}>
-          {question && <Text style={styles.question}>{question}</Text>}
+          <View style={styles.containerQuestion}>
+            {question && <Text style={styles.question}>{question}</Text>}
+          </View>
+
           <View style={styles.answersContainer}>
             {answers.map((answer, index) => (
               <TouchableOpacity
@@ -150,22 +128,41 @@ const QuestionModal = ({ isVisible, data, onClose }) => {
                   styles.answerButton,
                   selectedAnswer === answer && {
                     backgroundColor:
-                      answer !== correctAnswer ? "red" : "lightblue",
+                      answer !== correctAnswer
+                        ? color.lightRed
+                        : color.lightBlue,
                   },
                   answer === correctAnswer &&
-                    selectedAnswer !== null && { backgroundColor: "green" },
+                    selectedAnswer !== null && {
+                      backgroundColor: color.lightBlue,
+                    },
                 ]}
                 onPress={() => handleAnswerPress(answer)}
-                disabled={selectedAnswer !== null} // Không cho chọn lại
+                disabled={selectedAnswer !== null}
               >
                 <Text style={styles.answerText}>{answer}</Text>
               </TouchableOpacity>
             ))}
           </View>
-          {showNextButton && (
-            <Button title="Tiếp theo" onPress={generateQuestion} />
-          )}
-          <Button title="Đóng" onPress={onClose} />
+
+          <View
+            style={{
+              height: 50,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <View style={styles.containerNextQuestion}>
+              {showNextButton && (
+                <TouchableOpacity
+                  onPress={generateQuestion}
+                  style={styles.nextQuestion}
+                >
+                  <ArrowCircleRight2 size="36" color="#FF8A65" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
         </View>
       </View>
     </Modal>
