@@ -3,16 +3,17 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { Home, SearchNormal, Add, Notification, Profile } from "iconsax-react-native"; // Import các icon từ thư viện
 import styles from "../Css/footer"; // Import CSS
 import color from "../Custom/Color";
+
 const Footer = ({ navigation }) => {
-  const [selectedIcon, setSelectedIcon] = useState("home");
+  const [selectedIcon, setSelectedIcon] = useState("HomePage");
 
   const handleIconPress = (iconName) => {
     setSelectedIcon(iconName);
-
+    // navigation.navigate(iconName);
     // // Điều hướng màn hình
-    // if (navigation) {
-    //   navigation.navigate(iconName);
-    // }
+    // // if (navigation) {
+      
+    // // }
   };
 
   return (
@@ -20,16 +21,16 @@ const Footer = ({ navigation }) => {
       {/* Home Icon */}
       <TouchableOpacity
         style={styles.iconWrapper}
-        onPress={() => handleIconPress("home")}
+        onPress={() => handleIconPress("HomePage")}
       >
         <Home
-          size={selectedIcon === "home" ? 28 : 22}
-          color={selectedIcon === "home" ? color.lightBlue  : color.gray}
+          size={selectedIcon === "HomePage" ? 28 : 22}
+          color={selectedIcon === "HomePage" ? color.lightBlue  : color.gray}
         />
         <Text
           style={[
             styles.label,
-            selectedIcon === "home" && styles.selectedLabel,
+            selectedIcon === "HomePage" && styles.selectedLabel,
           ]}
         >
           Home
@@ -39,16 +40,16 @@ const Footer = ({ navigation }) => {
       {/* Search Icon */}
       <TouchableOpacity
         style={styles.iconWrapper}
-        onPress={() => handleIconPress("search")}
+        onPress={() => handleIconPress("Detail")}
       >
         <SearchNormal
-           size={selectedIcon === "search" ? 28 : 22}
-          color={selectedIcon === "search" ? color.lightBlue : color.gray}
+           size={selectedIcon === "Detail" ? 28 : 22}
+          color={selectedIcon === "Detail" ? color.lightBlue : color.gray}
         />
         <Text
           style={[
             styles.label,
-            selectedIcon === "search" && styles.selectedLabel,
+            selectedIcon === "Detail" && styles.selectedLabel,
           ]}
         >
           Search
@@ -58,16 +59,16 @@ const Footer = ({ navigation }) => {
       {/* Add Icon */}
       <TouchableOpacity
         style={styles.iconWrapper}
-        onPress={() => handleIconPress("add")}
+        onPress={() => handleIconPress("Add")}
       >
         <Add
-          size={selectedIcon === "add" ? 28 : 22}
-          color={selectedIcon === "add" ? color.lightBlue : color.gray}
+          size={selectedIcon === "Add" ? 28 : 22}
+          color={selectedIcon === "Add" ? color.lightBlue : color.gray}
         />
         <Text
           style={[
             styles.label,
-            selectedIcon === "add" && styles.selectedLabel,
+            selectedIcon === "Add" && styles.selectedLabel,
           ]}
         >
           Add

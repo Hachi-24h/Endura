@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="UvGkC7K8fBKDAfQlVkTB" name="Page-1">
-        <mxGraphModel dx="975" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1215" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -103,14 +103,113 @@
                 <mxCell id="35" value="X" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" parent="36" vertex="1">
                     <mxGeometry width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="39" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="240" y="860" width="450" height="660" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="40" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="320" y="1040" width="300" height="350" as="geometry"/>
                 </mxCell>
-                <mxCell id="41" value="câu hỏi&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="41" value="câu hỏi&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="720" y="1050" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="main" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="1860" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="dev(main2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="1860" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="47" target="52">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" style="edgeStyle=none;html=1;" edge="1" parent="1" source="47" target="56">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="47" target="63">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="720" y="2140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="68" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="47" target="67">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Nam" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="tính" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="425" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="tín" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="tòng" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="thuận cac" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" style="edgeStyle=none;html=1;" edge="1" parent="1" source="52">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="150" y="2290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="52" value="lệnh chuyển nhánh" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="2130" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="git checkout &amp;lt;tên nhánh &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="2300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="56" target="59">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="2320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="56" value="lệnh pull" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="290" y="2110" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="git pull origin dev" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="290" y="2310" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="63" target="64">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="lệnh Push" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="2130" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="git push origin &amp;lt;nhánh mình &amp;gt;&amp;nbsp;&lt;br&gt;vd&amp;nbsp;&lt;br&gt;git push origin Nam" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="2300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" style="edgeStyle=none;html=1;" edge="1" parent="1" source="67" target="69">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="chuyển nhánh về dev" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="2130" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="69" target="71">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="git checkout dev" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="2240" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="71" target="74">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="git merger &amp;lt;nhánh mình &amp;gt;&lt;br&gt;vd&amp;nbsp;&lt;br&gt;git merger Nam" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="2390" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="merger code lên dev" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="850" y="2325" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="git push origin dev" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="2510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="1860" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="Nam" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="tính" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#121D14;" vertex="1" parent="1">
+                    <mxGeometry x="425" y="1980" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
