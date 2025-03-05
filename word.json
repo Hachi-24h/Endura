@@ -1,0 +1,1597 @@
+[
+    {
+        "từ": "Project Charter",
+        "nghĩa": "Hiến chương dự án",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Business Case",
+        "nghĩa": "Bản phân tích kinh doanh",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Enterprise Environmental Factors",
+        "nghĩa": "Yếu tố môi trường doanh nghiệp",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Organizational Process Assets",
+        "nghĩa": "Tài sản quy trình tổ chức",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Project Statement of Work",
+        "nghĩa": "Tuyên bố công việc dự án",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Stakeholder Analysis",
+        "nghĩa": "Phân tích bên liên quan",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Change Control Board (CCB)",
+        "nghĩa": "Hội đồng kiểm soát thay đổi",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Work Package",
+        "nghĩa": "Gói công việc",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Functional Manager (FM)",
+        "nghĩa": "Quản lý chức năng",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Deliverable",
+        "nghĩa": "Sản phẩm bàn giao",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Scope Baseline",
+        "nghĩa": "Đường cơ sở phạm vi",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Requirements Traceability Matrix (RTM)",
+        "nghĩa": "Ma trận truy xuất yêu cầu",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Decomposition",
+        "nghĩa": "Phân rã công việc",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Critical Chain Scheduling",
+        "nghĩa": "Lập lịch chuỗi tới hạn",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Time Buffer",
+        "nghĩa": "Bộ đệm thời gian",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Fast Tracking",
+        "nghĩa": "Rút ngắn tiến độ",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Crashing",
+        "nghĩa": "Gia tăng tài nguyên để đẩy nhanh tiến độ",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Earned Value Management (EVM)",
+        "nghĩa": "Quản lý giá trị thu được",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Cost Performance Index (CPI)",
+        "nghĩa": "Chỉ số hiệu suất chi phí",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Schedule Performance Index (SPI)",
+        "nghĩa": "Chỉ số hiệu suất tiến độ",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Risk Register",
+        "nghĩa": "Sổ đăng ký rủi ro",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Qualitative Risk Analysis",
+        "nghĩa": "Phân tích rủi ro định tính",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Quantitative Risk Analysis",
+        "nghĩa": "Phân tích rủi ro định lượng",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Monte Carlo Simulation",
+        "nghĩa": "Mô phỏng Monte Carlo",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Risk Mitigation",
+        "nghĩa": "Giảm nhẹ rủi ro",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Risk Contingency Plan",
+        "nghĩa": "Kế hoạch dự phòng rủi ro",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Procurement Management",
+        "nghĩa": "Quản lý thu mua",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Fixed-Price Contract",
+        "nghĩa": "Hợp đồng giá cố định",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Cost-Reimbursable Contract",
+        "nghĩa": "Hợp đồng hoàn trả chi phí",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Time and Material Contract",
+        "nghĩa": "Hợp đồng thời gian và nguyên vật liệu",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Configuration Management",
+        "nghĩa": "Quản lý cấu hình",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Requirement Elicitation",
+        "nghĩa": "Thu thập yêu cầu",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Sprint Planning",
+        "nghĩa": "Lập kế hoạch Sprint",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Daily Stand-up",
+        "nghĩa": "Cuộc họp hàng ngày",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Product Backlog",
+        "nghĩa": "Danh sách công việc sản phẩm",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Burn-down Chart",
+        "nghĩa": "Biểu đồ Burn-down",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Technical Debt",
+        "nghĩa": "Nợ kỹ thuật",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Test Driven Development (TDD)",
+        "nghĩa": "Phát triển hướng kiểm thử",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Behavior Driven Development (BDD)",
+        "nghĩa": "Phát triển hướng hành vi",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Automated Testing",
+        "nghĩa": "Kiểm thử tự động",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Continuous Deployment",
+        "nghĩa": "Triển khai liên tục",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Infrastructure as Code (IaC)",
+        "nghĩa": "Cơ sở hạ tầng như mã",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "DevSecOps",
+        "nghĩa": "Phát triển bảo mật vận hành",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Cloud Computing",
+        "nghĩa": "Điện toán đám mây",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Microservices",
+        "nghĩa": "Kiến trúc vi dịch vụ",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Containerization",
+        "nghĩa": "Đóng gói ứng dụng",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Kubernetes",
+        "nghĩa": "Hệ thống điều phối container",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Serverless Computing",
+        "nghĩa": "Điện toán không máy chủ",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Edge Computing",
+        "nghĩa": "Điện toán biên",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Data Lake",
+        "nghĩa": "Kho dữ liệu lớn",
+        "loại từ": "Danh từ"
+    },
+    {
+        "từ": "Deploy",
+        "nghĩa": "Triển khai",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Integrate",
+        "nghĩa": "Tích hợp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Configure",
+        "nghĩa": "Cấu hình",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Optimize",
+        "nghĩa": "Tối ưu hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Automate",
+        "nghĩa": "Tự động hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Debug",
+        "nghĩa": "Gỡ lỗi",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Refactor",
+        "nghĩa": "Tái cấu trúc",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scale",
+        "nghĩa": "Mở rộng quy mô",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Encrypt",
+        "nghĩa": "Mã hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decrypt",
+        "nghĩa": "Giải mã",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Validate",
+        "nghĩa": "Xác thực",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authenticate",
+        "nghĩa": "Xác minh danh tính",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Execute",
+        "nghĩa": "Thực thi",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Monitor",
+        "nghĩa": "Giám sát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Log",
+        "nghĩa": "Ghi nhật ký",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compute",
+        "nghĩa": "Tính toán",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Analyze",
+        "nghĩa": "Phân tích",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compile",
+        "nghĩa": "Biên dịch",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Deployable",
+        "nghĩa": "Có thể triển khai",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Configurable",
+        "nghĩa": "Có thể cấu hình",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Optimized",
+        "nghĩa": "Đã tối ưu hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Automated",
+        "nghĩa": "Đã tự động hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Responsive",
+        "nghĩa": "Phản hồi nhanh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Interactive",
+        "nghĩa": "Tương tác",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Robust",
+        "nghĩa": "Mạnh mẽ, bền vững",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Secure",
+        "nghĩa": "Bảo mật",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-tolerant",
+        "nghĩa": "Chống lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Virtualized",
+        "nghĩa": "Được ảo hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Encrypted",
+        "nghĩa": "Đã mã hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Decrypted",
+        "nghĩa": "Đã giải mã",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Distributed",
+        "nghĩa": "Phân tán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cloud-based",
+        "nghĩa": "Dựa trên đám mây",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Containerized",
+        "nghĩa": "Đóng gói container",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Decentralized",
+        "nghĩa": "Phi tập trung",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-availability",
+        "nghĩa": "Khả dụng cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Real-time",
+        "nghĩa": "Thời gian thực",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Predictive",
+        "nghĩa": "Dự đoán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Implement",
+        "nghĩa": "Triển khai, thực hiện",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Develop",
+        "nghĩa": "Phát triển",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Upgrade",
+        "nghĩa": "Nâng cấp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Maintain",
+        "nghĩa": "Bảo trì",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Test",
+        "nghĩa": "Kiểm thử",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Modify",
+        "nghĩa": "Chỉnh sửa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Patch",
+        "nghĩa": "Cập nhật bản vá",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Host",
+        "nghĩa": "Lưu trữ, cung cấp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Backup",
+        "nghĩa": "Sao lưu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Recover",
+        "nghĩa": "Khôi phục",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Virtualize",
+        "nghĩa": "Ảo hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Synchronize",
+        "nghĩa": "Đồng bộ hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authorize",
+        "nghĩa": "Cấp quyền",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compress",
+        "nghĩa": "Nén dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decompress",
+        "nghĩa": "Giải nén",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Stream",
+        "nghĩa": "Truyền phát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Parse",
+        "nghĩa": "Phân tích cú pháp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scrape",
+        "nghĩa": "Thu thập dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Crawl",
+        "nghĩa": "Bò tìm dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Detect",
+        "nghĩa": "Phát hiện",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Filter",
+        "nghĩa": "Lọc",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Cache",
+        "nghĩa": "Lưu vào bộ nhớ cache",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Allocate",
+        "nghĩa": "Phân bổ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Transmit",
+        "nghĩa": "Truyền tải",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Clone",
+        "nghĩa": "Nhân bản",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Streamline",
+        "nghĩa": "Tối ưu hóa quy trình",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Customize",
+        "nghĩa": "Tùy chỉnh",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Encrypting",
+        "nghĩa": "Mã hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decoding",
+        "nghĩa": "Giải mã",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Benchmark",
+        "nghĩa": "Đo hiệu suất",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Efficient",
+        "nghĩa": "Hiệu quả",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Dynamic",
+        "nghĩa": "Năng động, động",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Modular",
+        "nghĩa": "Dạng mô-đun",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Optimized",
+        "nghĩa": "Được tối ưu hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-resistant",
+        "nghĩa": "Chống lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cross-platform",
+        "nghĩa": "Đa nền tảng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Customizable",
+        "nghĩa": "Có thể tùy chỉnh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Lightweight",
+        "nghĩa": "Nhẹ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Versatile",
+        "nghĩa": "Linh hoạt",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Resilient",
+        "nghĩa": "Có khả năng phục hồi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Automatable",
+        "nghĩa": "Có thể tự động hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Configurable",
+        "nghĩa": "Có thể cấu hình",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Intelligent",
+        "nghĩa": "Thông minh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Interactive",
+        "nghĩa": "Có tính tương tác",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fast",
+        "nghĩa": "Nhanh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Secure",
+        "nghĩa": "Bảo mật",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Decentralized",
+        "nghĩa": "Phi tập trung",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-performance",
+        "nghĩa": "Hiệu suất cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Redundant",
+        "nghĩa": "Dự phòng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Elastic",
+        "nghĩa": "Co giãn",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Predictive",
+        "nghĩa": "Dự đoán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Responsive",
+        "nghĩa": "Nhạy",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-tolerant",
+        "nghĩa": "Chịu lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Encrypted",
+        "nghĩa": "Đã mã hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Decipherable",
+        "nghĩa": "Có thể giải mã",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Robust",
+        "nghĩa": "Mạnh mẽ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Adaptive",
+        "nghĩa": "Thích nghi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Host",
+        "nghĩa": "Lưu trữ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Render",
+        "nghĩa": "Kết xuất",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Index",
+        "nghĩa": "Lập chỉ mục",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Execute",
+        "nghĩa": "Thực thi",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authenticate",
+        "nghĩa": "Xác thực",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authorize",
+        "nghĩa": "Cấp quyền",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Simulate",
+        "nghĩa": "Mô phỏng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compute",
+        "nghĩa": "Tính toán",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Monitor",
+        "nghĩa": "Giám sát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Analyze",
+        "nghĩa": "Phân tích",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compile",
+        "nghĩa": "Biên dịch",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Link",
+        "nghĩa": "Liên kết",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Merge",
+        "nghĩa": "Gộp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Split",
+        "nghĩa": "Tách",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Deploy",
+        "nghĩa": "Triển khai",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Upgrade",
+        "nghĩa": "Nâng cấp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Rollback",
+        "nghĩa": "Quay lui",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Queue",
+        "nghĩa": "Xếp hàng chờ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Schedule",
+        "nghĩa": "Lập lịch",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Stream",
+        "nghĩa": "Truyền phát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Parse",
+        "nghĩa": "Phân tích cú pháp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scrape",
+        "nghĩa": "Thu thập dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Crawl",
+        "nghĩa": "Bò tìm dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Filter",
+        "nghĩa": "Lọc",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Cache",
+        "nghĩa": "Lưu bộ nhớ đệm",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Allocate",
+        "nghĩa": "Phân bổ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Transmit",
+        "nghĩa": "Truyền tải",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Clone",
+        "nghĩa": "Nhân bản",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Streamline",
+        "nghĩa": "Tinh gọn",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Concurrent",
+        "nghĩa": "Đồng thời",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Distributed",
+        "nghĩa": "Phân tán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Virtualized",
+        "nghĩa": "Được ảo hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Redundant",
+        "nghĩa": "Dư thừa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-tolerant",
+        "nghĩa": "Chịu lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Real-time",
+        "nghĩa": "Thời gian thực",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Automated",
+        "nghĩa": "Tự động hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-availability",
+        "nghĩa": "Sẵn sàng cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Adaptive",
+        "nghĩa": "Thích nghi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Modular",
+        "nghĩa": "Dạng mô-đun",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Secure",
+        "nghĩa": "Bảo mật",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Customizable",
+        "nghĩa": "Có thể tùy chỉnh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Interactive",
+        "nghĩa": "Tương tác",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Responsive",
+        "nghĩa": "Phản hồi nhanh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Optimized",
+        "nghĩa": "Đã tối ưu hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Efficient",
+        "nghĩa": "Hiệu quả",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Intelligent",
+        "nghĩa": "Thông minh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Lightweight",
+        "nghĩa": "Nhẹ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Predictive",
+        "nghĩa": "Dự đoán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Elastic",
+        "nghĩa": "Co giãn",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Configurable",
+        "nghĩa": "Có thể cấu hình",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Resilient",
+        "nghĩa": "Có khả năng phục hồi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-performance",
+        "nghĩa": "Hiệu suất cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cloud-based",
+        "nghĩa": "Dựa trên đám mây",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Edge-based",
+        "nghĩa": "Dựa trên biên",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Thread-safe",
+        "nghĩa": "An toàn luồng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Effortless",
+        "nghĩa": "Dễ dàng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Transparent",
+        "nghĩa": "Trong suốt",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Compress",
+        "nghĩa": "Nén",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decompress",
+        "nghĩa": "Giải nén",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Integrate",
+        "nghĩa": "Tích hợp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Disconnect",
+        "nghĩa": "Ngắt kết nối",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Reconnect",
+        "nghĩa": "Kết nối lại",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Replicate",
+        "nghĩa": "Sao chép dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Synchronize",
+        "nghĩa": "Đồng bộ hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Optimize",
+        "nghĩa": "Tối ưu hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Diagnose",
+        "nghĩa": "Chẩn đoán",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Migrate",
+        "nghĩa": "Di chuyển dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Virtualize",
+        "nghĩa": "Ảo hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Expand",
+        "nghĩa": "Mở rộng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Reduce",
+        "nghĩa": "Giảm",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Extract",
+        "nghĩa": "Trích xuất",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Embed",
+        "nghĩa": "Nhúng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scale",
+        "nghĩa": "Phóng to, thu nhỏ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Visualize",
+        "nghĩa": "Trực quan hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compile",
+        "nghĩa": "Biên dịch",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Deploy",
+        "nghĩa": "Triển khai",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Patch",
+        "nghĩa": "Cập nhật bản vá",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scrape",
+        "nghĩa": "Thu thập dữ liệu web",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Render",
+        "nghĩa": "Kết xuất",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Simulate",
+        "nghĩa": "Mô phỏng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Encrypt",
+        "nghĩa": "Mã hóa",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decrypt",
+        "nghĩa": "Giải mã",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authenticate",
+        "nghĩa": "Xác thực",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authorize",
+        "nghĩa": "Cấp quyền",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Validate",
+        "nghĩa": "Kiểm tra tính hợp lệ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Store",
+        "nghĩa": "Lưu trữ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "High-speed",
+        "nghĩa": "Tốc độ cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Real-time",
+        "nghĩa": "Thời gian thực",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Encrypted",
+        "nghĩa": "Được mã hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Decentralized",
+        "nghĩa": "Phi tập trung",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cloud-native",
+        "nghĩa": "Thiết kế cho đám mây",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-tolerant",
+        "nghĩa": "Chống lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Lightweight",
+        "nghĩa": "Nhẹ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Optimized",
+        "nghĩa": "Đã tối ưu hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Adaptive",
+        "nghĩa": "Thích nghi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cross-platform",
+        "nghĩa": "Đa nền tảng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Intelligent",
+        "nghĩa": "Thông minh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Robust",
+        "nghĩa": "Mạnh mẽ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Flexible",
+        "nghĩa": "Linh hoạt",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Redundant",
+        "nghĩa": "Dự phòng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Configurable",
+        "nghĩa": "Có thể cấu hình",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Automated",
+        "nghĩa": "Tự động hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Efficient",
+        "nghĩa": "Hiệu quả",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Secure",
+        "nghĩa": "Bảo mật",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Resilient",
+        "nghĩa": "Có khả năng phục hồi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-availability",
+        "nghĩa": "Sẵn sàng cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Interactive",
+        "nghĩa": "Tương tác",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Predictive",
+        "nghĩa": "Dự đoán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Error-free",
+        "nghĩa": "Không lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Concurrent",
+        "nghĩa": "Đồng thời",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Seamless",
+        "nghĩa": "Liền mạch",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Thread-safe",
+        "nghĩa": "An toàn luồng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Track",
+        "nghĩa": "Theo dõi",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Log",
+        "nghĩa": "Ghi nhật ký",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Record",
+        "nghĩa": "Ghi lại",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Scan",
+        "nghĩa": "Quét",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Detect",
+        "nghĩa": "Phát hiện",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Map",
+        "nghĩa": "Ánh xạ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Provision",
+        "nghĩa": "Cung cấp tài nguyên",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Refactor",
+        "nghĩa": "Tái cấu trúc mã",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Clone",
+        "nghĩa": "Nhân bản",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Route",
+        "nghĩa": "Định tuyến",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compress",
+        "nghĩa": "Nén",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Decompress",
+        "nghĩa": "Giải nén",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Expand",
+        "nghĩa": "Mở rộng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Shrink",
+        "nghĩa": "Thu nhỏ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Deduplicate",
+        "nghĩa": "Loại bỏ dữ liệu trùng",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Correlate",
+        "nghĩa": "Liên kết dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Restore",
+        "nghĩa": "Khôi phục",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Rollback",
+        "nghĩa": "Quay lui hệ thống",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Stream",
+        "nghĩa": "Truyền phát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Index",
+        "nghĩa": "Lập chỉ mục",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Merge",
+        "nghĩa": "Gộp",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Split",
+        "nghĩa": "Tách",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Hash",
+        "nghĩa": "Băm dữ liệu",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Verify",
+        "nghĩa": "Xác minh",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Deploy",
+        "nghĩa": "Triển khai",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Compile",
+        "nghĩa": "Biên dịch",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Transpile",
+        "nghĩa": "Biên dịch giữa các ngôn ngữ",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Monitor",
+        "nghĩa": "Giám sát",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Authenticate",
+        "nghĩa": "Xác thực",
+        "loại từ": "Động từ"
+    },
+    {
+        "từ": "Thread-safe",
+        "nghĩa": "An toàn luồng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Memory-efficient",
+        "nghĩa": "Tiết kiệm bộ nhớ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-resistant",
+        "nghĩa": "Chống lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Optimized",
+        "nghĩa": "Được tối ưu hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Secure",
+        "nghĩa": "Bảo mật",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Automated",
+        "nghĩa": "Tự động hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Real-time",
+        "nghĩa": "Thời gian thực",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Concurrent",
+        "nghĩa": "Đồng thời",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Scalable",
+        "nghĩa": "Có thể mở rộng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-availability",
+        "nghĩa": "Sẵn sàng cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Elastic",
+        "nghĩa": "Có khả năng mở rộng linh hoạt",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Efficient",
+        "nghĩa": "Hiệu quả",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Lightweight",
+        "nghĩa": "Nhẹ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Distributed",
+        "nghĩa": "Phân tán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Cross-platform",
+        "nghĩa": "Đa nền tảng",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Customizable",
+        "nghĩa": "Có thể tùy chỉnh",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Predictive",
+        "nghĩa": "Dự đoán",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Modular",
+        "nghĩa": "Dạng mô-đun",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Flexible",
+        "nghĩa": "Linh hoạt",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Redundant",
+        "nghĩa": "Dư thừa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Virtualized",
+        "nghĩa": "Ảo hóa",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Resilient",
+        "nghĩa": "Có khả năng phục hồi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Fault-tolerant",
+        "nghĩa": "Chịu lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Configurable",
+        "nghĩa": "Có thể cấu hình",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "High-speed",
+        "nghĩa": "Tốc độ cao",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Error-free",
+        "nghĩa": "Không lỗi",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Latency-sensitive",
+        "nghĩa": "Nhạy với độ trễ",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Load-balanced",
+        "nghĩa": "Cân bằng tải",
+        "loại từ": "Tính từ"
+    },
+    {
+        "từ": "Seamless",
+        "nghĩa": "Liền mạch",
+        "loại từ": "Tính từ"
+    }
+]

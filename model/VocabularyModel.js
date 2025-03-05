@@ -6,6 +6,7 @@ export default class Vocabulary {
         this.types = types;
         this.synonyms = synonyms;
         this.antonyms = antonyms;
+        this.createdAt = new Date().toISOString(); // Lưu thời gian theo ISO format
     }
 
     // Phương thức kiểm tra và thêm loại từ

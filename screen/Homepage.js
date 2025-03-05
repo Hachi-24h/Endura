@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, TextInput, FlatList, Dimensions, S
 import styles from '../Css/Homepage';
 import { SearchStatus1 } from 'iconsax-react-native';
 import color from '../Custom/Color';
-import { getVocabularyList } from '../utils/fileSystem';
+import { getVocabularyList, getLength, getWordTypeCount } from '../utils/fileSystem';
 import * as Animatable from 'react-native-animatable';
 
 const { width, height } = Dimensions.get('window');
@@ -17,7 +17,8 @@ const HomePage = ({ navigation }) => {
     const [recentWords, setRecentWords] = useState([]);
     const [viewableItems, setViewableItems] = useState([]); // Lưu danh sách từ đang hiển thị
     const [shouldAnimate, setShouldAnimate] = useState(false);
-
+    const [valueVocal, setValueVocal] = useState(0);
+    const [valuetype, setValueType] = useState(null);
     // Xử lý khi từ vựng xuất hiện trên màn hình
     const onViewableItemsChanged = ({ viewableItems }) => {
         setViewableItems(viewableItems.map(item => item.index)); // Lưu lại index của các từ hiển thị
@@ -35,14 +36,23 @@ const HomePage = ({ navigation }) => {
 
     useEffect(() => {
         const fetchRecentWords = async () => {
-            const vocabulary = await getVocabularyList();
-            setRecentWords(vocabulary.slice(-5).reverse()); // Lấy 5 từ gần nhất
-        };
+            try {
+                const vocabulary = await getVocabularyList();
+                const length = await getLength();
+                const typeCount = await getWordTypeCount();
+                setValueVocal(length);
+                setRecentWords(vocabulary.slice(-5).reverse()); // Lấy 5 từ gần nhất
+                setValueType(typeCount);
 
+            } catch (error) {
+                console.error("Error fetching vocabulary:", error);
+            }
+        };
+    
         fetchRecentWords();
     }, []);
-
-
+    
+    // console.log(valuetype);
     const startAutoScroll = () => {
         autoScrollRef.current = setInterval(() => {
             let nextIndex = (currentIndex + 1) % 3; // 4 thẻ cố định
@@ -169,7 +179,7 @@ const HomePage = ({ navigation }) => {
                             delay={100}
                         >
                             <TouchableOpacity style={[styles.filter_1, { backgroundColor: "#D4A5E0", borderBottomRightRadius: width * 0.05, }]}
-                                onPress={() => navigation.navigate('Detail')}
+                                onPress={() => navigation.navigate('addtoJson')}
                             >
                                 <Image source={require('../Icon/add.png')} style={styles.logo} />
 

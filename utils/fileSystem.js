@@ -16,21 +16,26 @@ export const saveVocabularyToFile = async (data) => {
         // Tạo một bản sao của dữ liệu ban đầu
         const fullData = [...data];
 
-        // Duyệt qua từng từ vựng
+        // Duyệt qua từng từ vựng để đảm bảo tất cả đều có `createdAt`
         data.forEach((vocab) => {
+            if (!vocab.createdAt) {
+                vocab.createdAt = new Date().toISOString();
+            }
+
             // Thêm từ đồng nghĩa
             if (vocab.synonyms && Array.isArray(vocab.synonyms)) {
                 vocab.synonyms.forEach((synonym) => {
                     const existingItem = fullData.find((item) => item.word === synonym);
                     if (!existingItem) {
-                        // Nếu từ chưa tồn tại, thêm từ mới
+                        // Nếu từ chưa tồn tại, thêm từ mới với `createdAt`
                         fullData.push({
                             word: synonym,
                             meanings: [],
                             note: '',
                             types: [],
                             synonyms: [vocab.word], // Liên kết ngược
-                            antonyms: []
+                            antonyms: [],
+                            createdAt: new Date().toISOString()
                         });
                     } else {
                         // Nếu từ đã tồn tại, thêm liên kết ngược
@@ -46,14 +51,15 @@ export const saveVocabularyToFile = async (data) => {
                 vocab.antonyms.forEach((antonym) => {
                     const existingItem = fullData.find((item) => item.word === antonym);
                     if (!existingItem) {
-                        // Nếu từ chưa tồn tại, thêm từ mới
+                        // Nếu từ chưa tồn tại, thêm từ mới với `createdAt`
                         fullData.push({
                             word: antonym,
                             meanings: [],
                             note: '',
                             types: [],
                             synonyms: [],
-                            antonyms: [vocab.word] // Liên kết ngược
+                            antonyms: [vocab.word], // Liên kết ngược
+                            createdAt: new Date().toISOString()
                         });
                     } else {
                         // Nếu từ đã tồn tại, thêm liên kết ngược
@@ -66,10 +72,119 @@ export const saveVocabularyToFile = async (data) => {
         });
 
         // Ghi toàn bộ dữ liệu vào file
-        await RNFS.writeFile(appFilePath, JSON.stringify(fullData), 'utf8');
-        console.log(`File saved successfully to application directory: ${appFilePath}`);
+        await RNFS.writeFile(appFilePath, JSON.stringify(fullData, null, 2), 'utf8');
+        console.log(`✅ File saved successfully to application directory: ${appFilePath}`);
     } catch (error) {
-        console.error('Error writing file:', error);
+        console.error('❌ Error writing file:', error);
+    }
+};
+
+
+/**
+ * Đọc danh sách từ vựng từ file hiện tại
+ */
+export const getVocabularyData = async () => {
+    try {
+        const fileExists = await RNFS.exists(appFilePath);
+        if (!fileExists) {
+            console.log('⚠️ File vocabulary.json không tồn tại, tạo mới.');
+            return [];
+        }
+        const fileData = await RNFS.readFile(appFilePath, 'utf8');
+        return JSON.parse(fileData);
+    } catch (error) {
+        console.error('❌ Lỗi đọc dữ liệu từ vocabulary.json:', error);
+        return [];
+    }
+};
+
+/**
+ * Thêm từ mới từ file JSON vào danh sách từ vựng hiện có
+ * - Chỉ thêm từ chưa có, bỏ qua từ đã tồn tại.
+ * - Lưu lại danh sách vào file nhưng KHÔNG ghi đè dữ liệu cũ.
+ */
+export const addWordsFromJsonFile = async (filePath) => {
+    try {
+        // Đọc dữ liệu từ file JSON được chọn
+        const fileData = await RNFS.readFile(filePath, 'utf8');
+        const newWords = JSON.parse(fileData);
+
+        // Bảng ánh xạ từ loại từ tiếng Việt sang loại từ hợp lệ trong hệ thống
+        const typeMapping = {
+            "Danh từ": "Noun",
+            "Đại từ": "Pronoun",
+            "Động từ": "Verb",
+            "Tính từ": "Adjective",
+            "Trạng từ": "Adverb",
+            "Giới từ": "Preposition",
+            "Liên từ": "Conjunction",
+            "Thán từ": "Interjection",
+            "Từ hạn định": "Determiner",
+            "Mạo từ": "Article"
+        };
+
+        // Kiểm tra xem dữ liệu JSON có đúng dạng mảng không
+        if (!Array.isArray(newWords)) {
+            console.error("❌ Lỗi: Dữ liệu JSON không hợp lệ (không phải mảng)");
+            return 0;
+        }
+
+        // Đọc danh sách từ vựng hiện có
+        let existingWords = await getVocabularyData();
+        let wordsToAdd = [];
+
+        newWords.forEach((wordData, index) => {
+            if (!wordData || typeof wordData !== "object") {
+                console.warn(`⚠️ Bỏ qua mục ${index + 1}: Không hợp lệ`, wordData);
+                return;
+            }
+
+            const word = wordData["từ"] ? wordData["từ"].trim() : null;
+            const meaning = wordData["nghĩa"] ? wordData["nghĩa"].trim() : null;
+            let type = wordData["loại từ"] ? wordData["loại từ"].trim() : null;
+
+            if (!word || !meaning) {
+                console.warn(`⚠️ Bỏ qua mục ${index + 1}: Thiếu từ hoặc nghĩa`, wordData);
+                return;
+            }
+
+            // Chuyển đổi loại từ từ tiếng Việt sang tiếng Anh
+            if (typeMapping[type]) {
+                type = typeMapping[type];
+            } else {
+                console.warn(`⚠️ Loại từ "${type}" không hợp lệ, tự động đặt thành 'Noun'.`);
+                type = "Noun"; // Nếu không khớp với bảng mapping, mặc định là "Noun"
+            }
+
+            const isExist = existingWords.some(existingWord => 
+                existingWord.word && existingWord.word.toLowerCase() === word.toLowerCase()
+            );
+
+            if (!isExist) {
+                wordsToAdd.push({
+                    word,
+                    meaning: [meaning],
+                    types: [type], // Đảm bảo 'types' là một mảng
+                    synonyms: [],
+                    antonyms: [],
+                    note: "",
+                    createdAt: new Date().toISOString(), // ✅ Thêm thuộc tính thời gian
+                });
+            }
+        });
+
+        if (wordsToAdd.length > 0) {
+            existingWords = [...existingWords, ...wordsToAdd];
+            await RNFS.writeFile(appFilePath, JSON.stringify(existingWords, null, 2), 'utf8');
+            console.log(`✅ Đã thêm ${wordsToAdd.length} từ mới vào từ điển.`);
+        } else {
+            console.log("🔄 Không có từ mới nào được thêm vào, tất cả từ đã tồn tại hoặc dữ liệu không hợp lệ.");
+        }
+
+        return wordsToAdd.length;
+    } catch (error) {
+        console.error('❌ Lỗi nhập từ file JSON:', error);
+        return 0;
     }
 };
 
@@ -93,26 +208,75 @@ export const getVocabularyFromFile = async () => {
     }
 };
 
+// Đếm số lượng từ vựng trong file
+export const getWordTypeCount = async () => {
+    try {
+        const vocabularyList = await getVocabularyFromFile();
+        if (!vocabularyList.length) {
+            console.log("Vocabulary list is empty.");
+            return {};
+        }
+
+        const validTypes = ['Noun', 'Pronoun', 'Verb', 'Adjective', 'Adverb', 'Preposition', 'Conjunction', 'Interjection', 'Determiner', 'Article'];
+
+        // Khởi tạo đối tượng đếm loại từ
+        const wordTypeCount = validTypes.reduce((acc, type) => {
+            acc[type] = 0;
+            return acc;
+        }, {});
+
+        // Duyệt qua danh sách từ vựng và đếm loại từ
+        vocabularyList.forEach((word) => {
+            if (Array.isArray(word.types)) {
+                word.types.forEach((type) => {
+                    if (validTypes.includes(type)) {
+                        wordTypeCount[type]++;
+                    }
+                });
+            }
+        });
+
+        console.log("Word Type Count:", wordTypeCount);
+        return wordTypeCount;
+    } catch (error) {
+        console.error("Error counting word types:", error);
+        return {};
+    }
+};
+
+
+export const getLength = async () => {
+    try {
+        const fileExists = await RNFS.exists(appFilePath);
+        if (!fileExists) {
+            console.log('File does not exist, returning empty data.');
+            return 0;
+        }
+
+        const fileData = await RNFS.readFile(appFilePath, 'utf8');
+        const vocabulary = JSON.parse(fileData);
+        return vocabulary.length;
+    } catch (error) {
+        console.error('Error reading file:', error);
+        return 0;
+    }
+};
 // random N từ vựng từ file
 export const getRandomVocabulary = async (n) => {
     try {
-        // Lấy danh sách từ vựng từ file
-        const vocabulary = await getVocabularyFromFile();
-
+        const vocabulary = await getVocabularyList();
         if (!vocabulary || vocabulary.length === 0) {
-            console.log('Vocabulary list is empty.');
+            console.log('🔍 Danh sách từ vựng trống.');
             return [];
         }
 
-        // Shuffle danh sách từ vựng
+        // Trộn danh sách ngẫu nhiên
         const shuffled = vocabulary.sort(() => 0.5 - Math.random());
 
-        // Lấy `n` phần tử đầu tiên
-        const randomWords = shuffled.slice(0, n);
-
-        return randomWords;
+        // Chọn `n` phần tử đầu tiên
+        return shuffled.slice(0, n);
     } catch (error) {
-        console.error('Error getting random vocabulary:', error);
+        console.error('❌ Lỗi lấy từ vựng ngẫu nhiên:', error);
         return [];
     }
 };
@@ -485,5 +649,60 @@ export const getUnrelatedWords = async (wordToCheck, count = 3) => {
     } catch (error) {
         console.error('Error fetching unrelated words:', error);
         return [];
+    }
+};
+
+
+/**
+ * Nhập từ vựng từ file JSON
+ * @param {string} filePath - Đường dẫn file JSON chứa danh sách từ vựng
+ */
+export const importWordsFromJson = async (filePath) => {
+    try {
+        // Đọc nội dung file JSON
+        const fileData = await RNFS.readFile(filePath, 'utf8');
+        const newWords = JSON.parse(fileData);
+
+        // Đọc từ vựng hiện có
+        let existingWords = await getVocabularyFromFile();
+
+        // Tạo danh sách mới, chỉ thêm từ chưa có
+        let wordsToAdd = [];
+        newWords.forEach((wordData) => {
+            const word = wordData["từ"]; // Sử dụng cú pháp truy cập thuộc tính bằng dấu ngoặc vuông
+            const meaning = wordData["nghĩa"];
+            const type = wordData["loại từ"];
+
+            if (!word) {
+                console.warn("⚠️ Bỏ qua một mục không có từ hợp lệ:", wordData);
+                return;
+            }
+
+            const isExist = existingWords.some(existingWord => existingWord.word.toLowerCase() === word.toLowerCase());
+
+            if (!isExist) {
+                wordsToAdd.push({
+                    word: word,
+                    meaning: [meaning],
+                    type: type || "Unknown",
+                    synonyms: [],
+                    antonyms: [],
+                    note: "",
+                });
+            }
+        });
+
+        if (wordsToAdd.length > 0) {
+            existingWords = [...existingWords, ...wordsToAdd];
+            await saveVocabularyToFile(existingWords);
+            console.log(`✅ Đã thêm ${wordsToAdd.length} từ mới vào danh sách từ vựng.`);
+        } else {
+            console.log("🔄 Không có từ mới nào được thêm vào, tất cả từ đã tồn tại.");
+        }
+
+        return wordsToAdd.length;
+    } catch (error) {
+        console.error('❌ Lỗi nhập từ file JSON:', error);
+        return 0;
     }
 };
