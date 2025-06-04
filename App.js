@@ -12,7 +12,7 @@ const defaultOptions = {
 };
 
 const App = () => {
-  const [initialScreen, setInitialScreen] = useState("HomePage");
+  const [initialScreen, setInitialScreen] = useState("Demo");
 
   useEffect(() => {
     const checkFirstLogin = async () => {

@@ -5,6 +5,7 @@ import { SearchStatus1 } from 'iconsax-react-native';
 import color from '../Custom/Color';
 import { getVocabularyList, getLength, getWordTypeCount } from '../utils/fileSystem';
 import * as Animatable from 'react-native-animatable';
+import QuestionModal from '../QuizGame/Choose4';
 
 const { width, height } = Dimensions.get('window');
 
@@ -301,8 +302,8 @@ const HomePage = ({ navigation }) => {
                     />
                 </View>
 
-
-
+                       
+                        {/* <QuestionModal  /> */}
             </View >
         </ScrollView >
     );
