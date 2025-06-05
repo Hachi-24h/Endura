@@ -1,5 +1,5 @@
 import RNFS from 'react-native-fs';
-
+import levenshtein from "fast-levenshtein";
 // Đường dẫn lưu file trong thư mục riêng của ứng dụng
 const appFilePath = `${RNFS.DocumentDirectoryPath}/vocabulary.json`;
 const normalizeVocabulary = (vocabulary) => {
@@ -706,3 +706,78 @@ export const importWordsFromJson = async (filePath) => {
         return 0;
     }
 };
+
+
+// lấy 3 từ để làm quiz
+export const findConfusingWords = async (targetWord, targetMeaning, type, vocabularyList) => {
+  const thresholdLength = 4;
+  const result = [];
+
+  const cleanText = (text) =>
+    text.toLowerCase().replace(/[^\w\s]/gi, "").trim();
+
+  const compareMeaning = (a, b) => {
+    a = cleanText(a);
+    b = cleanText(b);
+    return (
+      a.includes(b) ||
+      b.includes(a) ||
+      levenshtein.get(a, b) <= 4 // khoảng cách gần
+    );
+  };
+
+  for (let item of vocabularyList) {
+    const word = item.word;
+    const meaning = item.meaning?.[0] || "";
+
+    if (!word || !meaning || cleanText(word) === cleanText(targetWord)) continue;
+
+    switch (type) {
+      case "meaning":
+        if (
+          compareMeaning(meaning, targetMeaning) &&
+          !item.synonyms?.includes(targetWord) &&
+          !item.antonyms?.includes(targetWord)
+        ) {
+          result.push(word);
+        }
+        break;
+
+      case "word":
+        if (
+          levenshtein.get(cleanText(word), cleanText(targetWord)) <= 3 ||
+          cleanText(word).startsWith(cleanText(targetWord[0])) ||
+          cleanText(word).includes(cleanText(targetWord.slice(0, 3)))
+        ) {
+          result.push(word);
+        }
+        break;
+
+      case "synonym":
+        if (
+          item.meaning &&
+          item.meaning.length > 0 &&
+          compareMeaning(item.meaning[0], targetMeaning) &&
+          !item.synonyms?.includes(targetWord)
+        ) {
+          result.push(item.synonyms?.[0] || word);
+        }
+        break;
+
+      case "antonym":
+        if (
+          item.meaning &&
+          item.meaning.length > 0 &&
+          compareMeaning(item.meaning[0], targetMeaning) &&
+          !item.antonyms?.includes(targetWord)
+        ) {
+          result.push(item.antonyms?.[0] || word);
+        }
+        break;
+    }
+
+    if (result.length >= 3) break;
+  }
+
+  return result.slice(0, 3);
+}; 

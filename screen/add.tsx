@@ -8,49 +8,56 @@ import {
     StyleSheet,
     View,
     Alert,
-    KeyboardAvoidingView, TouchableOpacity
+    KeyboardAvoidingView,
+    TouchableOpacity,
+    Platform,
 } from 'react-native';
-import BouncyCheckbox from "react-native-bouncy-checkbox"; // Thư viện hỗ trợ checkbox
-import { isFileExists, saveVocabularyToFile, getVocabularyFromFile } from '../utils/fileSystem'; // Đảm bảo sử dụng react-native-fs
-import Vocabulary from '../model/VocabularyModel';  // Import model từ vựng
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { isFileExists, saveVocabularyToFile, getVocabularyFromFile } from '../utils/fileSystem';
+import Vocabulary from '../model/VocabularyModel';
 import { Back, BluetoothRectangle, CloudNotif } from 'iconsax-react-native';
 import { updateUserSettings } from '../utils/userSettings';
-const HomePage = ({ navigation }) => {
-    const [word, setWord] = useState('');
-    const [meaning, setMeaning] = useState('');
-    const [note, setNote] = useState('');
-    const [types, setTypes] = useState([]); // Chuyển từ type thành types (danh sách)
-    const [synonymsList, setSynonymsList] = useState('');
-    const [antonymsList, setAntonymsList] = useState('');
-    const [vocabularyList, setVocabularyList] = useState([]);
 
-    const validTypes = [
-        'Noun', 'Pronoun', 'Verb', 'Adjective', 'Adverb', 'Preposition', 'Conjunction', 'Interjection', 'Determiner', 'Article'
+type Props = {
+    navigation: any; // 👈 Có thể thay bằng `NativeStackNavigationProp<...>` nếu bạn dùng react-navigation v6
+};
+
+type VocabularyItem = InstanceType<typeof Vocabulary>;
+
+const HomePage: React.FC<Props> = ({ navigation }) => {
+    const [word, setWord] = useState<string>('');
+    const [meaning, setMeaning] = useState<string>('');
+    const [note, setNote] = useState<string>('');
+    const [types, setTypes] = useState<string[]>([]);
+    const [synonymsList, setSynonymsList] = useState<string>('');
+    const [antonymsList, setAntonymsList] = useState<string>('');
+    const [vocabularyList, setVocabularyList] = useState<VocabularyItem[]>([]);
+
+    const validTypes: string[] = [
+        'Noun', 'Pronoun', 'Verb', 'Adjective', 'Adverb',
+        'Preposition', 'Conjunction', 'Interjection',
+        'Determiner', 'Article'
     ];
 
-    // Load dữ liệu khi ứng dụng khởi động
     useEffect(() => {
         const loadVocabulary = async () => {
-            const exists = await isFileExists(); // Kiểm tra xem file có tồn tại không
+            const exists = await isFileExists();
             if (exists) {
-                const data = await getVocabularyFromFile(); // Đọc dữ liệu từ file
-                setVocabularyList(data);  // Lưu dữ liệu vào state
+                const data = await getVocabularyFromFile();
+                setVocabularyList(data);
             }
         };
         loadVocabulary();
     }, []);
 
-    const toggleType = (type) => {
-        setTypes((prevTypes) => {
-            if (prevTypes.includes(type)) {
-                return prevTypes.filter((t) => t !== type);
-            } else {
-                return [...prevTypes, type];
-            }
-        });
+    const toggleType = (type: string) => {
+        setTypes((prevTypes) =>
+            prevTypes.includes(type)
+                ? prevTypes.filter((t) => t !== type)
+                : [...prevTypes, type]
+        );
     };
 
-    // Thêm từ vựng mới
     const addVocabulary = async () => {
         if (!word.trim().match(/^[a-zA-Z]+( [a-zA-Z]+)*$/)) {
             Alert.alert('Error', 'Word must only contain letters and spaces in between, but cannot have spaces at the beginning or end!');
@@ -67,39 +74,29 @@ const HomePage = ({ navigation }) => {
             return;
         }
 
-        // Lọc danh sách để loại bỏ chuỗi rỗng hoặc chỉ chứa khoảng trắng
         const filteredSynonyms = synonymsList
-            ? synonymsList
-                .split(',')
-                .map((synonym) => synonym.trim())
-                .filter((synonym) => synonym.length > 0)
+            ? synonymsList.split(',').map(s => s.trim()).filter(Boolean)
             : [];
 
         const filteredAntonyms = antonymsList
-            ? antonymsList
-                .split(',')
-                .map((antonym) => antonym.trim())
-                .filter((antonym) => antonym.length > 0)
+            ? antonymsList.split(',').map(a => a.trim()).filter(Boolean)
             : [];
-        const ListMeaning = meaning.trim().split(',').map((meaning) => meaning.trim());
-        // Tạo đối tượng từ vựng mới từ model
+
+        const listMeaning = meaning.trim().split(',').map(m => m.trim());
+
         const newVocabulary = new Vocabulary(
             word.trim(),
-            ListMeaning,
+            listMeaning,
             note.trim(),
             types,
             filteredSynonyms,
             filteredAntonyms
         );
 
-        // Cập nhật danh sách từ vựng
         const updatedList = [...vocabularyList, newVocabulary];
-        setVocabularyList(updatedList); // Cập nhật lại state
-
-        // Lưu vào file
+        setVocabularyList(updatedList);
         await saveVocabularyToFile(updatedList);
 
-        // Reset form
         setWord('');
         setMeaning('');
         setNote('');
@@ -107,30 +104,25 @@ const HomePage = ({ navigation }) => {
         setSynonymsList('');
         setAntonymsList('');
     };
+
     const handlePress = async () => {
         try {
-            // Cập nhật trạng thái hasLoggedInBefore thành false
             await updateUserSettings({ hasLoggedInBefore: false });
-    
-            console.log("First login state reset successfully.");
-    
-            // Chuyển hướng hoặc tải lại màn hình
-            navigation.replace('Detail'); // Thay 'Detail' bằng tên màn hình bạn muốn
+            navigation.replace('Detail');
         } catch (error) {
-            console.error("Error resetting first login state:", error);
+            console.error("Error resetting login state:", error);
             Alert.alert("Error", "An error occurred while resetting the state.");
         }
     };
-    
 
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Detail')} >
+                    <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
                         <CloudNotif size={30} color="#6c63ff" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePress} style={styles.button}>
@@ -139,7 +131,7 @@ const HomePage = ({ navigation }) => {
                 </View>
 
                 <FlatList
-                    ListHeaderComponent={(
+                    ListHeaderComponent={
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.input}
@@ -169,7 +161,7 @@ const HomePage = ({ navigation }) => {
                                         <BouncyCheckbox
                                             size={25}
                                             fillColor="#6c63ff"
-                                            unfillColor="#FFFFFF"
+                                            unFillColor="#FFFFFF"
                                             text={item}
                                             iconStyle={{ borderColor: "#6c63ff" }}
                                             innerIconStyle={{ borderWidth: 2 }}
@@ -194,25 +186,17 @@ const HomePage = ({ navigation }) => {
                             />
                             <Button title="Add Vocabulary" onPress={addVocabulary} />
                         </View>
-                    )}
+                    }
                     data={vocabularyList}
                     keyExtractor={(item) => item.word}
                     renderItem={({ item }) => (
                         <View style={styles.item}>
                             <Text style={styles.word}>{item.word}</Text>
-                            <Text style={styles.meaning}>{item.meaning}</Text>
+                            <Text style={styles.meaning}>{Array.isArray(item.meaning) ? item.meaning.join(', ') : item.meaning}</Text>
                             <Text>Types: {item.types?.join(', ') || 'None'}</Text>
                             {item.note && <Text>Note: {item.note}</Text>}
-                            {item.synonyms?.length > 0 ? (
-                                <Text>Synonyms: {item.synonyms.join(', ')}</Text>
-                            ) : (
-                                <Text>Synonyms: None</Text>
-                            )}
-                            {item.antonyms?.length > 0 ? (
-                                <Text>Antonyms: {item.antonyms.join(', ')}</Text>
-                            ) : (
-                                <Text>Antonyms: None</Text>
-                            )}
+                            <Text>Synonyms: {item.synonyms?.join(', ') || 'None'}</Text>
+                            <Text>Antonyms: {item.antonyms?.join(', ') || 'None'}</Text>
                         </View>
                     )}
                 />
@@ -238,13 +222,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#fff',
     },
-    checkboxContainer: {
-        marginBottom: 20,
-    },
-    header: {
-        fontSize: 20,
-        fontWeight: 'bold',
+    checkboxRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginBottom: 10,
+    },
+    checkboxColumn: {
+        flex: 1,
+        marginHorizontal: 5,
     },
     item: {
         padding: 10,
@@ -259,14 +244,8 @@ const styles = StyleSheet.create({
     meaning: {
         fontSize: 16,
     },
-    checkboxRow: {
-        flexDirection: 'row', // Hàng ngang
-        justifyContent: 'space-between', // Cách đều các cột trong hàng
-        marginBottom: 10, // Khoảng cách giữa các hàng
-    },
-    checkboxColumn: {
-        flex: 1, // Đảm bảo mỗi cột chiếm đều không gian
-        marginHorizontal: 5, // Khoảng cách giữa các cột
+    button: {
+        padding: 10,
     },
 });
 

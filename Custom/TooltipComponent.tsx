@@ -1,8 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React, { ReactNode } from 'react';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, ViewStyle } from 'react-native';
 
-const TooltipComponent = ({ visible, onClose, content, position = { top: 0, left: 0 } }) => {
-    if (!visible) return null; // Không hiển thị nếu `visible` là false
+type TooltipProps = {
+    visible: boolean;
+    onClose: () => void;
+    content: string | ReactNode;
+    position?: {
+        top: number;
+        left: number;
+    };
+};
+
+const TooltipComponent: React.FC<TooltipProps> = ({ visible, onClose, content, position = { top: 0, left: 0 } }) => {
+    if (!visible) return null;
 
     return (
         <TouchableWithoutFeedback onPress={onClose}>
@@ -22,28 +32,28 @@ const TooltipComponent = ({ visible, onClose, content, position = { top: 0, left
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute', // Đặt tuyệt đối theo vị trí
-        zIndex: 1000, // Đảm bảo Tooltip nổi lên trên
-    },
+        position: 'absolute',
+        zIndex: 1000,
+    } as ViewStyle,
     tooltipBox: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Nền tối mờ
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         padding: 10,
         borderRadius: 5,
-        maxWidth: 200, // Đặt kích thước tối đa cho tooltip
+        maxWidth: 200,
     },
     text: {
-        color: '#fff', // Chữ trắng
+        color: '#fff',
         fontSize: 14,
     },
     arrow: {
         width: 10,
         height: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Màu trùng với tooltipBox
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         position: 'absolute',
-        top: -5, // Đặt phía trên tooltipBox
+        top: -5,
         left: '50%',
         marginLeft: -5,
-        transform: [{ rotate: '45deg' }], // Xoay để tạo hình mũi tên
+        transform: [{ rotate: '45deg' }],
     },
 });
 

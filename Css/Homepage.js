@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
     alignItems: "center",
     filterColumn: "column",
-    marginHorizontal: width * 0.05,
+    marginHorizontal: width * 0.085,
   },
   courseImg: {
     width: width * 0.4,
@@ -151,19 +151,22 @@ const styles = StyleSheet.create({
   },
   pagination: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: height * 0.02,
+    marginTop: 0,
     
   },
   slideContainer: {
-    width: width*0.9,
+    width: width*0.96,
     height: height * 0.35,
-    marginVertical: height * 0.02,
+    marginTop: height * 0.02,
    
   },
   dot: {
     width: width * 0.02,
     height: width * 0.02,
     borderRadius: width * 0.01,
-    marginHorizontal: width * 0.01,
+    marginHorizontal: width * 0.015,
   },
   wordContainer: {
     flexDirection: "column",
@@ -172,6 +175,7 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     height: height * 0.1,
     marginVertical: height * 0.02,
+    marginHorizontal: width * 0.05,
  
     paddingHorizontal: width * 0.05,
     borderRadius: width * 0.05,

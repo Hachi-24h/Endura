@@ -10,6 +10,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     FlatList,
+    Alert,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import color from "../Custom/Color";
@@ -17,21 +18,38 @@ import { CloseSquare } from "iconsax-react-native";
 
 const { width, height } = Dimensions.get("window");
 
-const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated, editVocabulary }) => {
+type VocabularyItem = {
+    word: string;
+    meaning: string;
+    types?: string[];
+    note?: string;
+};
+
+type EditVocabularyModalProps = {
+    visible: boolean;
+    onClose: () => void;
+    vocabulary: VocabularyItem;
+    onUpdated: () => void;
+    editVocabulary: (oldWord: string, updatedData: VocabularyItem) => Promise<boolean>;
+};
+
+const EditVocabularyModal: React.FC<EditVocabularyModalProps> = ({
+    visible,
+    onClose,
+    vocabulary,
+    onUpdated,
+    editVocabulary,
+}) => {
     const [word, setWord] = useState(vocabulary.word);
     const [meaning, setMeaning] = useState(vocabulary.meaning);
-    const [type, setType] = useState(vocabulary.types || []); // Lưu loại từ là mảng
-    const [note, setNote] = useState(vocabulary.note);
+    const [type, setType] = useState<string[]>(vocabulary.types || []);
+    const [note, setNote] = useState(vocabulary.note || "");
 
-    const availableTypes = [
-        "Noun", "Pronoun", "Verb", "Adjective", "Adverb", 
-        "Preposition", "Conjunction", "Interjection", 
+    const availableTypes: string[] = [
+        "Noun", "Pronoun", "Verb", "Adjective", "Adverb",
+        "Preposition", "Conjunction", "Interjection",
         "Determiner", "Article"
     ];
-
-    const handleKeyPress = (nextFieldRef) => {
-        nextFieldRef?.current?.focus();
-    };
 
     useEffect(() => {
         if (vocabulary) {
@@ -43,27 +61,26 @@ const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated, editVoca
     }, [vocabulary]);
 
     const handleSave = async () => {
-        const updatedData = { word, meaning, types: type, note };
+        const updatedData: VocabularyItem = { word, meaning, types: type, note };
         const success = await editVocabulary(vocabulary.word, updatedData);
         if (success) {
             onUpdated();
             onClose();
         } else {
-            alert("Chỉnh sửa thất bại. Vui lòng thử lại.");
+            Alert.alert("Chỉnh sửa thất bại. Vui lòng thử lại.");
         }
     };
 
-    // Hàm để chọn hoặc bỏ chọn loại từ
-    const toggleTypeSelection = (selectedType) => {
+    const toggleTypeSelection = (selectedType: string) => {
         setType((prevTypes) =>
             prevTypes.includes(selectedType)
-                ? prevTypes.filter((t) => t !== selectedType) // Loại bỏ nếu đã chọn
-                : [...prevTypes, selectedType] // Thêm nếu chưa chọn
+                ? prevTypes.filter((t) => t !== selectedType)
+                : [...prevTypes, selectedType]
         );
     };
 
     return (
-        <Modal visible={visible} transparent={true} animationType="slide">
+        <Modal visible={visible} transparent animationType="slide">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalContent, styles.shadowEffect]}>
@@ -107,13 +124,16 @@ const EditVocabularyModal = ({ visible, onClose, vocabulary, onUpdated, editVoca
                                         <BouncyCheckbox
                                             size={25}
                                             fillColor={color.lightBlue}
-                                            unfillColor={color.white}
+                                            unFillColor={color.white}
                                             text={item}
-                                            iconStyle={{  }}
+                                            iconStyle={{}}
                                             innerIconStyle={{ borderWidth: 2 }}
-                                            textStyle={{ textDecorationLine: "none" , fontSize:width*0.035 }}
+                                            textStyle={{
+                                                textDecorationLine: "none",
+                                                fontSize: width * 0.035,
+                                            }}
                                             onPress={() => toggleTypeSelection(item)}
-                                            isChecked={type.includes(item)} // Kiểm tra nếu đã chọn
+                                            isChecked={type.includes(item)}
                                         />
                                     </View>
                                 )}
@@ -181,13 +201,11 @@ const styles = StyleSheet.create({
     },
     rowDetailType: {
         flexDirection: "row",
-      
         marginBottom: height * 0.02,
     },
     labelType: {
         fontSize: height * 0.018,
         color: color.black,
-        
     },
     label: {
         fontSize: height * 0.018,
@@ -209,7 +227,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 10,
-       
     },
     checkboxColumn: {
         flex: 1,

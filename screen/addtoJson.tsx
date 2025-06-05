@@ -1,29 +1,40 @@
 import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  StyleSheet, 
-  Dimensions, 
-  FlatList 
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  ListRenderItem,
 } from "react-native";
-import DocumentPicker from "react-native-document-picker";
+import DocumentPicker, { types as DocumentPickerTypes } from "react-native-document-picker";
 import { addWordsFromJsonFile, getVocabularyData } from "../utils/fileSystem";
 import Footer from "../screen/footer";
 
+// Kiểu dữ liệu cho 1 từ vựng
+interface VocabularyItem {
+  word: string;
+  meaning: string[];
+  [key: string]: any; // Dự phòng nếu còn các trường khác
+}
+
+interface Props {
+  navigation: any; // Hoặc có thể dùng NavigationProp nếu dùng React Navigation v6+
+}
+
 const { width, height } = Dimensions.get("window");
 
-const AddtoJson = ({ navigation }) => {
-  const [statusMessage, setStatusMessage] = useState("");
-  const [wordCount, setWordCount] = useState(0);
-  const [addedWords, setAddedWords] = useState([]);
-  const [failedCount, setFailedCount] = useState(0);
+const AddtoJson: React.FC<Props> = ({ navigation }) => {
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [wordCount, setWordCount] = useState<number>(0);
+  const [addedWords, setAddedWords] = useState<VocabularyItem[]>([]);
+  const [failedCount, setFailedCount] = useState<number>(0);
 
-  // Hàm chọn file JSON từ hệ thống
   const handleFilePicker = async () => {
     try {
       const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.json],
+        type: [DocumentPickerTypes.json],
       });
 
       if (!result || result.length === 0) {
@@ -34,20 +45,18 @@ const AddtoJson = ({ navigation }) => {
       const fileUri = result[0].uri;
       console.log("📂 File đã chọn:", fileUri);
 
-      // Nhập dữ liệu từ file JSON
       const addedCount = await addWordsFromJsonFile(fileUri);
       const updatedWords = await getVocabularyData();
 
       if (addedCount > 0) {
-        setAddedWords(updatedWords.slice(-5)); // Lấy 5 từ mới nhất
+        setAddedWords(updatedWords.slice(-5));
         setWordCount(updatedWords.length);
         setFailedCount(updatedWords.length - addedCount);
         setStatusMessage(`✅ Đã thêm ${addedCount} từ mới.`);
       } else {
         setStatusMessage("🔄 Không có từ mới nào được thêm vào.");
       }
-
-    } catch (error) {
+    } catch (error: any) {
       if (DocumentPicker.isCancel(error)) {
         setStatusMessage("❌ Bạn đã hủy chọn file.");
       } else {
@@ -57,6 +66,13 @@ const AddtoJson = ({ navigation }) => {
     }
   };
 
+  const renderItem: ListRenderItem<VocabularyItem> = ({ item }) => (
+    <View style={styles.wordItem}>
+      <Text style={styles.wordText}>{item.word}</Text>
+      <Text style={styles.meaningText}>{item.meaning.join(", ")}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>📂 Thêm từ vựng từ file JSON</Text>
@@ -65,46 +81,35 @@ const AddtoJson = ({ navigation }) => {
         <Text style={styles.buttonText}>Chọn file JSON</Text>
       </TouchableOpacity>
 
-      {/* Hiển thị trạng thái nhập file */}
       <Text style={styles.status}>{statusMessage}</Text>
 
-      {/* Hiển thị số lượng từ vựng */}
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>📖 Tổng số từ: {wordCount}</Text>
         <Text style={styles.infoText}>✅ Đã thêm: {wordCount - failedCount}</Text>
         <Text style={styles.infoText}>❌ Thất bại: {failedCount}</Text>
       </View>
 
-      {/* Danh sách 5 từ mới nhất */}
       <View style={styles.recentContainer}>
         <Text style={styles.sectionTitle}>📌 5 từ vừa nhập gần nhất:</Text>
         <FlatList
           data={addedWords}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.wordItem}>
-              <Text style={styles.wordText}>{item.word}</Text>
-              <Text style={styles.meaningText}>{item.meaning.join(", ")}</Text>
-            </View>
-          )}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={renderItem}
         />
       </View>
 
-      {/* Nút xem danh sách từ vựng */}
-      <TouchableOpacity 
-        style={styles.viewListButton} 
-        onPress={() => navigation.navigate('VocabularyList')}
+      <TouchableOpacity
+        style={styles.viewListButton}
+        onPress={() => navigation.navigate("VocabularyList")}
       >
         <Text style={styles.viewListButtonText}>📖 Xem danh sách từ</Text>
       </TouchableOpacity>
 
-      {/* Footer navigation */}
       <Footer navigation={navigation} />
     </View>
   );
 };
 
-// Style CSS theo tỉ lệ màn hình
 const styles = StyleSheet.create({
   container: {
     flex: 1,

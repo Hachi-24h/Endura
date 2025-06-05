@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
-import styles from "../Css/choose4";
-import color from "../Custom/Color";
+import styles from "../../Css/choose4";
+import color from "../../Custom/Color";
 import { ArrowCircleRight2 } from "iconsax-react-native";
-import { getUnrelatedWords } from "../utils/fileSystem";
+import { getUnrelatedWords } from "../../utils/fileSystem";
 
 const QuestionModal = ({ isVisible, data, onClose, testType }) => {
   const [question, setQuestion] = useState(null);
