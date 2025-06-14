@@ -11,7 +11,8 @@ import addtoJson from '../screen/addtoJson';
 import VocabularyList from '../screen/VocabularyList';
 import QuizScreen from '../screen/QuizScreen';
 import HomePage2 from '../screen/Homepage/HomePage';
-
+import Detail2 from '../screen/DetailVocal/VocabularyDetailScreen';
+import VocabularyFlipScreen from '../screen/Vocabulary/VocabularyFlipScreen';
 export default {
   HomePage,
   Login,
@@ -23,5 +24,6 @@ export default {
   choose,
   addtoJson,
   HomePage2,
-  VocabularyList,QuizScreen
+  VocabularyList,QuizScreen,VocabularyFlipScreen,
+  Detail2
 };

@@ -5,7 +5,7 @@ export const generateHint = (word = "") => {
   const length = chars.length;
 
   // Chỉ tính chữ cái (a-z hoặc A-Z)
-  const isLetter = (char) => /^[a-zA-Z]$/.test(char);
+  const isLetter = (char:string) => /^[a-zA-Z]$/.test(char);
 
   // Gợi ý ban đầu: dấu "_" cho chữ cái, giữ nguyên các ký tự khác
   let hintArray = chars.map((ch) => {

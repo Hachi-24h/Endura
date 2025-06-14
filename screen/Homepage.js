@@ -116,6 +116,7 @@ const HomePage = ({ navigation }) => {
                 </View>
             </Animatable.View>
 
+
             <View style={styles.body}>
                 <Animatable.Text
                     animation={"fadeInLeft"}
@@ -241,6 +242,7 @@ const HomePage = ({ navigation }) => {
                         onMomentumScrollEnd={handleScrollEnd}
                     />
                 </Animatable.View>
+                
                 <View style={styles.pagination}>
                     {[0, 1, 2].map((_, index) => (
                         <View

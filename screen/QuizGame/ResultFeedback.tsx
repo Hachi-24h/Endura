@@ -1,7 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const ResultFeedback = ({ isCorrect, correctAnswer }) => {
+type ResultFeedbackProps = {
+  isCorrect: boolean;
+  correctAnswer: string;
+};
+const ResultFeedback: React.FC<ResultFeedbackProps> = ({
+  isCorrect,
+  correctAnswer,
+}) => {
   return (
     <View style={styles.feedbackBox}>
       <Text style={{ color: isCorrect ? "#4CAF50" : "#F44336", fontWeight: "bold" }}>

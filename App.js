@@ -12,7 +12,7 @@ const defaultOptions = {
 };
 
 const App = () => {
-  const [initialScreen, setInitialScreen] = useState("HomePage2");
+  const [initialScreen, setInitialScreen] = useState("VocabularyFlipScreen");
 
   useEffect(() => {
     const checkFirstLogin = async () => {

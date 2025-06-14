@@ -7,25 +7,43 @@ import {
     TouchableOpacity,
     FlatList, Keyboard,
     Dimensions, Modal, TouchableWithoutFeedback,
+    Alert,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AddSquare, Edit, CloseSquare, PenClose } from "iconsax-react-native"; // Import icon từ thư viện
-import styles from "../Css/detailVocal";
-import Footer from "./footer";
-import color from "../Custom/Color";
-import { searchSimilarWords, addOrUpdateAntonym, addOrUpdateSynonym, searchExactWord, getRandomVocabulary } from '../utils/fileSystem';
-import EditVocabularyModal from "../Modal/EditVocabularyModal"
+import styles from "../../Css/detailVocal";
+import Footer from "../footer";
+import color from "../../Custom/Color";
+import { searchSimilarWords, addOrUpdateAntonym, addOrUpdateSynonym, searchExactWord, getRandomVocabulary } from '../../utils/fileSystem';
+import EditVocabularyModal from "../../Modal/EditVocabularyModal"
+type Vocabulary = {
+    word: string;
+    meaning: string;
+    note?: string;
+    type?: string;
+    types?: string[];
+    synonyms?: string[];
+    antonyms?: string[];
+};
 
-const VocabularyDetailScreen = ({ navigation, route }) => {
-    const [vocabulary, setVocabulary] = useState(null); // Từ hiện tại
-    const [synonyms, setSynonyms] = useState([]); // Danh sách từ đồng nghĩa
-    const [antonyms, setAntonyms] = useState([]); // Danh sách từ trái nghĩa
+type RouteProps = {
+    params?: {
+        vocabulary?: Vocabulary;
+    };
+};
+const VocabularyDetailScreen: React.FC<Props> = ({ navigation, route }) => {
+    const [vocabulary, setVocabulary] = useState<Vocabulary | null>(null);
+
+    const [synonyms, setSynonyms] = useState<string[]>([]);   // ✅ Danh sách từ đồng nghĩa
+    const [antonyms, setAntonyms] = useState<string[]>([]);   // ✅ Danh sách từ trái nghĩa
     const [type, setType] = useState([]);
     const [newSynonym, setNewSynonym] = useState("");
     const [newAntonym, setNewAntonym] = useState("");
     const { width, height } = Dimensions.get("window");
-    const [searchText, setSearchText] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchText, setSearchText] = useState<string>('');
+
+   const [searchResults, setSearchResults] = useState<Vocabulary[]>([]);
+
     const wordVocal = vocabulary ? vocabulary.word : "Unknown";
     const meaningVocal = vocabulary ? vocabulary.meaning : "Unknown";
     const sanitizedMeaningVocal = Array.isArray(meaningVocal)
@@ -37,12 +55,15 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
         : ` ${sanitizedMeaningVocal.map(item => `[ ${item} ]`).join(' , ').trim()}`;
 
     const noteVocal = vocabulary ? vocabulary.note : "Unknown";
+
     const validSynonyms = synonyms.filter(item => item.trim() !== "");
     const validAntonyms = antonyms.filter(item => item.trim() !== "");
     const [isSynonymModalVisible, setSynonymModalVisible] = useState(false);
     const [isAntonymModalVisible, setAntonymModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
-    const [historyStack, setHistoryStack] = useState([]);
+    // Gốc: Khai báo historyStack đúng kiểu
+    const [historyStack, setHistoryStack] = useState<Vocabulary[]>([]);
+
     const typeColors = {
         "Noun": "#FF5733", // Cam đậm
         "Pronoun": "#FFCC99", // Tím nhạt
@@ -60,6 +81,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
         if (historyStack.length > 0) {
             // Lấy từ trên cùng của stack
             const previousWord = historyStack[historyStack.length - 1];
+
 
             // Cập nhật từ hiện tại
             setVocabulary(previousWord);
@@ -90,12 +112,12 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     );
 
 
-    const handleSearch = async (text) => {
+    const handleSearch = async (text: string) => {
         setSearchText(text);
         if (text.trim() !== '') {
-           
+
             const results = await searchSimilarWords(text);
-           
+
             setSearchResults(results);
         } else {
             setSearchResults([]);
@@ -103,7 +125,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     };
 
 
-    const renderItem = ({ item }) => (
+   const renderItem = ({ item }: { item: Vocabulary }) => (
         <TouchableOpacity
             style={styles.resultItemSearch}
             onPress={() => {
@@ -118,7 +140,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
             <Text style={styles.resultTextMeaning}>{item.meaning}</Text>
         </TouchableOpacity>
     );
-    // console.log("Vocabulary:", vocabulary);
+    console.log("Vocabulary:", vocabulary);
     // Dữ liệu mẫu
     const sampleData = [
         {
@@ -134,7 +156,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
     const fetchRandomWord = async () => {
         try {
             const randomWordList = await getRandomVocabulary(2);
-           
+
             if (randomWordList.length > 0) {
                 const randomWord = randomWordList[0];
 
@@ -165,7 +187,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
         loadVocabulary();
     }, [route.params]);
 
-    const handleAddSynonymFromModal = async (word, newSynonym) => {
+    const handleAddSynonymFromModal = async (word:Vocabulary, newSynonym:Vocabulary) => {
         console.log("Current word:", word);
         console.log("New synonym to add:", newSynonym);
         const success = await addOrUpdateSynonym(word, newSynonym);
@@ -179,7 +201,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
         }
     };
 
-    const handleAddAntonymFromModal = async (word, newAntonym) => {
+    const handleAddAntonymFromModal = async (word:Vocabulary, newSynonym:Vocabulary) => {
         const success = await addOrUpdateAntonym(word, newAntonym);
         if (success) {
             console.log("Antonym added successfully.");
@@ -196,7 +218,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
             const result = await searchExactWord(word);
             if (result) {
                 // Lưu từ hiện tại vào stack
-                setHistoryStack((prevStack) => [...prevStack, vocabulary]);
+               setHistoryStack((prevStack) => [...prevStack, result]);
 
                 // Điều hướng đến từ mới
                 setVocabulary(result);
@@ -204,11 +226,11 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                 setSynonyms(result.synonyms || []);
                 setAntonyms(result.antonyms || []);
             } else {
-                alert("Không tìm thấy thông tin chi tiết về từ này.");
+               Alert.alert("Không tìm thấy thông tin chi tiết về từ này.");
             }
         } catch (error) {
             console.error("Lỗi khi tìm kiếm từ:", error);
-            alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+            Alert.alert("Đã xảy ra lỗi. Vui lòng thử lại.");
         }
     };
 
@@ -258,7 +280,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
             {/* Thanh tìm kiếm */}
             <View style={styles.searchBar}>
                 <TouchableOpacity onPress={handleGoBack}>
-                    <Image source={require("../Icon/back.png")} style={styles.backicon} />
+                    <Image source={require("../../Icon/back.png")} style={styles.backicon} />
                 </TouchableOpacity>
                 <TextInput
                     placeholder="Search"
@@ -374,7 +396,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                                             renderItem={({ item }) => (
                                                 <View style={styles.columnItem}>
                                                     <TouchableOpacity
-                                                        onPress={() => handleWordPress(item)}
+                                                        onPress={() => handleWordPress()}
                                                     >
                                                         <Text style={[styles.listItem, { backgroundColor: "#FFCC99" }]}>{item}</Text>
                                                     </TouchableOpacity>
@@ -384,7 +406,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                                             numColumns={2}
                                         />
                                     ) : (
-                                        <Text style={styles.emptyText}>Hãy nhập thêm từ đồng nghĩa</Text>
+                                        <Text >Hãy nhập thêm từ đồng nghĩa</Text>
                                     )}
 
                                 </View>
@@ -421,7 +443,7 @@ const VocabularyDetailScreen = ({ navigation, route }) => {
                                             numColumns={2}
                                         />
                                     ) : (
-                                        <Text style={styles.emptyText}>Hãy nhập thêm từ trái nghĩa</Text>
+                                        <Text >Hãy nhập thêm từ trái nghĩa</Text>
                                     )}
 
                                 </View>

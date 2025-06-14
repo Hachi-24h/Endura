@@ -1,12 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const FinalResultModal = ({ resultList }) => {
+type ResultItem = {
+  type: string;
+  correct: boolean;
+};
+
+type Props = {
+  resultList: ResultItem[];
+};
+
+const FinalResultModal: React.FC<Props> = ({ resultList }) => {
   const total = resultList.length;
   const correct = resultList.filter(r => r.correct).length;
   const wrong = total - correct;
 
-  const stats = resultList.reduce((acc, curr) => {
+  const stats = resultList.reduce<Record<string, { total: number; correct: number }>>((acc, curr) => {
     if (!acc[curr.type]) acc[curr.type] = { total: 0, correct: 0 };
     acc[curr.type].total++;
     if (curr.correct) acc[curr.type].correct++;

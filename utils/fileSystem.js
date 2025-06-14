@@ -709,10 +709,9 @@ export const importWordsFromJson = async (filePath) => {
 
 
 // lấy 3 từ để làm quiz
-export const findConfusingWords = async (targetWord, targetMeaning, type, vocabularyList) => {
-  const thresholdLength = 4;
-  const result = [];
 
+
+export const findConfusingWords = async (targetWord, targetMeaning, type, vocabularyList) => {
   const cleanText = (text) =>
     text.toLowerCase().replace(/[^\w\s]/gi, "").trim();
 
@@ -722,31 +721,36 @@ export const findConfusingWords = async (targetWord, targetMeaning, type, vocabu
     return (
       a.includes(b) ||
       b.includes(a) ||
-      levenshtein.get(a, b) <= 4 // khoảng cách gần
+      levenshtein.get(a, b) <= 4
     );
   };
+
+  const isDuplicate = (val) =>
+    cleanText(val) === cleanText(targetWord) ||
+    cleanText(val) === cleanText(targetMeaning);
+
+  const result = [];
 
   for (let item of vocabularyList) {
     const word = item.word;
     const meaning = item.meaning?.[0] || "";
 
-    if (!word || !meaning || cleanText(word) === cleanText(targetWord)) continue;
+    if (!word || !meaning || isDuplicate(word)) continue;
 
     switch (type) {
       case "meaning":
         if (
           compareMeaning(meaning, targetMeaning) &&
-          !item.synonyms?.includes(targetWord) &&
-          !item.antonyms?.includes(targetWord)
+          !(item.synonyms || []).includes(targetWord) &&
+          !(item.antonyms || []).includes(targetWord)
         ) {
-          result.push(word);
+          result.push(meaning);
         }
         break;
 
       case "word":
         if (
           levenshtein.get(cleanText(word), cleanText(targetWord)) <= 3 ||
-          cleanText(word).startsWith(cleanText(targetWord[0])) ||
           cleanText(word).includes(cleanText(targetWord.slice(0, 3)))
         ) {
           result.push(word);
@@ -756,22 +760,20 @@ export const findConfusingWords = async (targetWord, targetMeaning, type, vocabu
       case "synonym":
         if (
           item.meaning &&
-          item.meaning.length > 0 &&
           compareMeaning(item.meaning[0], targetMeaning) &&
-          !item.synonyms?.includes(targetWord)
+          !(item.synonyms || []).includes(targetWord)
         ) {
-          result.push(item.synonyms?.[0] || word);
+          result.push((item.synonyms && item.synonyms[0]) || word);
         }
         break;
 
       case "antonym":
         if (
           item.meaning &&
-          item.meaning.length > 0 &&
           compareMeaning(item.meaning[0], targetMeaning) &&
-          !item.antonyms?.includes(targetWord)
+          !(item.antonyms || []).includes(targetWord)
         ) {
-          result.push(item.antonyms?.[0] || word);
+          result.push((item.antonyms && item.antonyms[0]) || word);
         }
         break;
     }
@@ -779,5 +781,26 @@ export const findConfusingWords = async (targetWord, targetMeaning, type, vocabu
     if (result.length >= 3) break;
   }
 
+  // Nếu chưa đủ 3 từ → lấy ngẫu nhiên các từ khác (không trùng, không trống)
+  if (result.length < 3) {
+    const fallback = [];
+
+    for (let item of vocabularyList) {
+      let candidate = type === "meaning" ? item.meaning?.[0] : item.word;
+      if (
+        candidate &&
+        !result.includes(candidate) &&
+        !isDuplicate(candidate) &&
+        !fallback.includes(candidate)
+      ) {
+        fallback.push(candidate);
+      }
+
+      if (result.length + fallback.length >= 3) break;
+    }
+
+    return [...result, ...fallback.slice(0, 3 - result.length)];
+  }
+
   return result.slice(0, 3);
-}; 
+};

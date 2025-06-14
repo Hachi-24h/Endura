@@ -1,8 +1,22 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity, Text, StyleSheet ,Dimensions} from "react-native";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
 import { height, width } from "../../utils/config";
-
-const InputAnswerBox = ({ value, onChangeText, onSubmit, disabled, correctWord, hint }) => {
+type InputAnswerBoxProps = {
+  value: string;
+  onChangeText: (text: string) => void;
+  onSubmit: () => void;
+  disabled: boolean;
+  correctWord: string;
+  hint: string;
+};
+const InputAnswerBox: React.FC<InputAnswerBoxProps> = ({
+  value,
+  onChangeText,
+  onSubmit,
+  disabled,
+  correctWord,
+  hint,
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.hint}>{hint}</Text>

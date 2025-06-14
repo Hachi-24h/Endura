@@ -1,7 +1,21 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const AnswerOptions = ({ options, correct, selected, onSelect, showResult }) => {
+type AnswerOptionsProps = {
+  options: string[];
+  correct: string;
+  selected: string;
+  onSelect: (option: string) => void;
+  showResult: boolean;
+};
+
+const AnswerOptions: React.FC<AnswerOptionsProps> = ({
+  options,
+  correct,
+  selected,
+  onSelect,
+  showResult,
+}) => {
   return (
     <View style={styles.container}>
       {options.map((opt, idx) => {
@@ -14,14 +28,14 @@ const AnswerOptions = ({ options, correct, selected, onSelect, showResult }) => 
 
         if (showResult) {
           if (isCorrect) {
-            bgColor = "#C8E6C9"; // xanh lá nhạt
-            borderColor = "#4CAF50"; // xanh đậm
+            bgColor = "#C8E6C9";
+            borderColor = "#4CAF50";
           } else if (isSelected) {
-            bgColor = "#FFCDD2"; // đỏ nhạt
-            borderColor = "#E53935"; // đỏ đậm
+            bgColor = "#FFCDD2";
+            borderColor = "#E53935";
           }
         } else if (isSelected) {
-          bgColor = "#BBDEFB"; // xanh dương nhạt
+          bgColor = "#BBDEFB";
           borderColor = "#2196F3";
         }
 
@@ -41,9 +55,7 @@ const AnswerOptions = ({ options, correct, selected, onSelect, showResult }) => 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 16,
-  },
+  container: { marginTop: 16 },
   option: {
     paddingVertical: 14,
     paddingHorizontal: 16,
