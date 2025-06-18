@@ -10,6 +10,7 @@ import FilterSection from './FilterSection';
 import SlideSection from './SlideSection';
 import RecentWordsSection from './RecentWordsSection';
 import { VocabularyItem } from './types';
+import Footer from '../footer';
 
 const { width } = Dimensions.get('window');
 
@@ -67,6 +68,7 @@ const HomePage: React.FC<{ navigation: any }> = ({ navigation }) => {
 
       <SlideSection currentIndex={currentIndex} flatListRef={flatListRef} setCurrentIndex={setCurrentIndex} />
       <RecentWordsSection words={recentWords} shouldAnimate={shouldAnimate} />
+      <Footer navigation={navigation}  />
     </ScrollView>
   );
 };

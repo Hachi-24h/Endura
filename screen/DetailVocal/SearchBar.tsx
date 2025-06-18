@@ -32,7 +32,7 @@ const SearchBar: React.FC<Props> = ({
   return (
     <View style={styles.searchBar}>
       <TouchableOpacity onPress={handleGoBack}>
-        <Image source={require("../Icon/back.png")} style={styles.backicon} />
+        <Image source={require("../../Icon/back.png")} style={styles.backicon} />
       </TouchableOpacity>
       <TextInput
         placeholder="Search"

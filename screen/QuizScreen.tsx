@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import QuestionBlock from "./QuizGame/QuestionBlock";
 import FinalResultModal from "./QuizGame/FinalResultModal";
-import { getRandomVocabulary, getUnrelatedWords, findConfusingWords } from "../utils/fileSystem";
+import { getRandomVocabulary, getUnrelatedWords } from "../utils/fileSystem";
 import styles from "../Css/quiz"; // Import styles for QuizScreen
 type Result = {
   correct: boolean;

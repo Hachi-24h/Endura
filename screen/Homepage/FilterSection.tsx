@@ -39,7 +39,7 @@ const FilterSection: React.FC<{ navigation: any }> = ({ navigation }) => {
             delay={100}
           >
             <TouchableOpacity style={[styles.filter_1, { backgroundColor: "#AEDFF7", borderBottomLeftRadius: width * 0.05, }]}
-              onPress={() => navigation.navigate('Detail2')}
+              onPress={() => navigation.navigate('VocabularyFlipScreen')}
             >
               <Image source={require('../../Icon/word.png')} style={styles.logo} />
               <Text style={styles.filterText}>Word</Text>
@@ -55,7 +55,7 @@ const FilterSection: React.FC<{ navigation: any }> = ({ navigation }) => {
 
           >
             <TouchableOpacity style={[styles.filter_1, { backgroundColor: "#A8E6CF", borderTopRightRadius: width * 0.05, }]}
-              onPress={() => navigation.navigate('Detail')}
+              onPress={() => navigation.navigate('Detail2')}
             >
               <Image source={require('../../Icon/search2.png')} style={styles.logo} />
 

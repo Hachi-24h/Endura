@@ -9,7 +9,7 @@ const Footer = ({ navigation }) => {
 
   const handleIconPress = (iconName) => {
     setSelectedIcon(iconName);
-    // navigation.navigate(iconName);
+    navigation.navigate(iconName);
     // // Điều hướng màn hình
     // // if (navigation) {
       
@@ -21,7 +21,7 @@ const Footer = ({ navigation }) => {
       {/* Home Icon */}
       <TouchableOpacity
         style={styles.iconWrapper}
-        onPress={() => handleIconPress("HomePage")}
+        onPress={() => handleIconPress("HomePage2")}
       >
         <Home
           size={selectedIcon === "HomePage" ? 28 : 22}

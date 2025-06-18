@@ -610,7 +610,7 @@ export const editVocabulary = async (originalWord, updatedData) => {
         // Cập nhật dữ liệu
         if (updatedData.word) wordToEdit.word = updatedData.word.trim();
         if (updatedData.meaning) wordToEdit.meaning = updatedData.meaning.trim();
-        if (updatedData.type) wordToEdit.type = updatedData.type.trim();
+       if (updatedData.types) wordToEdit.types = updatedData.types;
         if (updatedData.note) wordToEdit.note = updatedData.note.trim();
 
         // Lưu thay đổi
