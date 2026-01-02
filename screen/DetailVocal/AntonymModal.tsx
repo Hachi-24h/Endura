@@ -13,6 +13,7 @@ import styles from "../../Css/detailVocal";
 import color from "../../Custom/Color";
 import { searchSimilarWords } from "../../utils/fileSystem";
 
+
 type Props = {
   visible: boolean;
   onClose: () => void;

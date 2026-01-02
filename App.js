@@ -12,7 +12,7 @@ const defaultOptions = {
 };
 
 const App = () => {
-  const [initialScreen, setInitialScreen] = useState("Add");
+  const [initialScreen, setInitialScreen] = useState("addword");
 
   useEffect(() => {
     const checkFirstLogin = async () => {

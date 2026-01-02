@@ -16,6 +16,8 @@ const color: { [key: string]: string } = {
     orange: "#F48113", // Màu cam
     lightRed: "#FF6666", // Màu đỏ nhạt
     lightyellow: "#ffd273"
+
+ 
 };
 
 export default color;

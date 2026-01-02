@@ -1,117 +1,58 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import { Home, SearchNormal, Add, Notification, Profile } from "iconsax-react-native"; // Import các icon từ thư viện
-import styles from "../Css/footer"; // Import CSS
+import {
+  Home,
+  SearchNormal,
+  Add,
+  Book,
+  Setting2,
+} from "iconsax-react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import styles from "../Css/footer";
 import color from "../Custom/Color";
 
-const Footer = ({ navigation }) => {
-  const [selectedIcon, setSelectedIcon] = useState("HomePage");
+const Footer = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const [active, setActive] = useState(route.name);
 
-  const handleIconPress = (iconName) => {
-    setSelectedIcon(iconName);
-    navigation.navigate(iconName);
-    // // Điều hướng màn hình
-    // // if (navigation) {
-      
-    // // }
+  const go = (routeName) => {
+    setActive(routeName);
+    navigation.navigate(routeName);
+  };
+
+  const renderItem = (routeName, label, Icon) => {
+    const isActive = active === routeName;
+
+    return (
+      <TouchableOpacity
+        style={styles.iconWrapper}
+        onPress={() => go(routeName)}
+      >
+        <Icon
+          size={isActive ? 28 : 22}
+          color={isActive ? color.lightBlue : color.gray}
+          variant={isActive ? "Bold" : "Outline"}
+        />
+        <Text
+          style={[
+            styles.label,
+            isActive && styles.selectedLabel,
+          ]}
+        >
+          {label}
+        </Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
     <View style={styles.footerContainer}>
-      {/* Home Icon */}
-      <TouchableOpacity
-        style={styles.iconWrapper}
-        onPress={() => handleIconPress("HomePage2")}
-      >
-        <Home
-          size={selectedIcon === "HomePage" ? 28 : 22}
-          color={selectedIcon === "HomePage" ? color.lightBlue  : color.gray}
-        />
-        <Text
-          style={[
-            styles.label,
-            selectedIcon === "HomePage" && styles.selectedLabel,
-          ]}
-        >
-          Home
-        </Text>
-      </TouchableOpacity>
-
-      {/* Search Icon */}
-      <TouchableOpacity
-        style={styles.iconWrapper}
-        onPress={() => handleIconPress("Detail")}
-      >
-        <SearchNormal
-           size={selectedIcon === "Detail" ? 28 : 22}
-          color={selectedIcon === "Detail" ? color.lightBlue : color.gray}
-        />
-        <Text
-          style={[
-            styles.label,
-            selectedIcon === "Detail" && styles.selectedLabel,
-          ]}
-        >
-          Search
-        </Text>
-      </TouchableOpacity>
-
-      {/* Add Icon */}
-      <TouchableOpacity
-        style={styles.iconWrapper}
-        onPress={() => handleIconPress("Add")}
-      >
-        <Add
-          size={selectedIcon === "Add" ? 28 : 22}
-          color={selectedIcon === "Add" ? color.lightBlue : color.gray}
-        />
-        <Text
-          style={[
-            styles.label,
-            selectedIcon === "Add" && styles.selectedLabel,
-          ]}
-        >
-          Add
-        </Text>
-      </TouchableOpacity>
-
-      {/* Notification Icon */}
-      <TouchableOpacity
-        style={styles.iconWrapper}
-        onPress={() => handleIconPress("notifications")}
-      >
-        <Notification
-            size={selectedIcon === "notifications" ? 28 : 22}
-          color={selectedIcon === "notifications" ? color.lightBlue : color.gray}
-        />
-        <Text
-          style={[
-            styles.label,
-            selectedIcon === "notifications" && styles.selectedLabel,
-          ]}
-        >
-          Notify
-        </Text>
-      </TouchableOpacity>
-
-      {/* Profile Icon */}
-      <TouchableOpacity
-        style={styles.iconWrapper}
-        onPress={() => handleIconPress("profile")}
-      >
-        <Profile
-          size={selectedIcon === "profile" ? 28 : 22}
-          color={selectedIcon === "profile" ? color.lightBlue : color.gray}
-        />
-        <Text
-          style={[
-            styles.label,
-            selectedIcon === "profile" && styles.selectedLabel,
-          ]}
-        >
-          Profile
-        </Text>
-      </TouchableOpacity>
+      {renderItem("addtoJson", "Home", Home)}
+      {renderItem("listword", "Search", SearchNormal)}
+      {renderItem("addword", "Add", Add)}
+      {renderItem("testword", "Test", Book)}
+      {renderItem("SettingScreen", "Setting", Setting2)}
     </View>
   );
 };

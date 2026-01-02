@@ -1,56 +1,34 @@
-type WordType =
-  | 'Noun'
-  | 'Pronoun'
-  | 'Verb'
-  | 'Adjective'
-  | 'Adverb'
-  | 'Preposition'
-  | 'Conjunction'
-  | 'Interjection'
-  | 'Determiner'
-  | 'Article';
+// VocabularyModel_NEW.ts
 
-export default class Vocabulary {
-  word: string;
-  meaning: string;
-  note?: string;
-  types: WordType[];
-  synonyms: string[];
-  antonyms: string[];
-  createdAt: string;
+// ================= WORD TYPES =================
+// Loại từ cố định, không cho user tự thêm
+export const WORD_TYPES = [
+  'noun',
+  'verb',
+  'adjective',
+  'adverb',
+  'preposition',
+  'sentence',
+  'other',
+] as const;
 
-  constructor(
-    word: string,
-    meaning: string,
-    note: string = '',
-    types: WordType[] = [],
-    synonyms: string[] = [],
-    antonyms: string[] = []
-  ) {
-    this.word = word;
-    this.meaning = meaning;
-    this.note = note;
-    this.types = types;
-    this.synonyms = synonyms;
-    this.antonyms = antonyms;
-    this.createdAt = new Date().toISOString();
-  }
+export type WordType = typeof WORD_TYPES[number];
 
-  addType(type: WordType) {
-    if (!this.types.includes(type)) {
-      this.types.push(type);
-    }
-  }
+// ================= VOCABULARY MODEL =================
+export interface Vocabulary {
+  id: string;
 
-  removeType(type: WordType) {
-    this.types = this.types.filter((t) => t !== type);
-  }
+  english: string;
+  vietnamese: string;
 
-  addSynonym(synonym: string) {
-    this.synonyms.push(synonym);
-  }
+  meanings: string[];     // nhiều nghĩa
+  wordTypes: WordType[];  // nhiều loại từ
 
-  addAntonym(antonym: string) {
-    this.antonyms.push(antonym);
-  }
+  notes?: string;
+
+  synonyms?: string[];
+  antonyms?: string[];
+
+  // ⚠️ category dùng string để DYNAMIC
+  categories?: string[];
 }

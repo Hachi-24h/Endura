@@ -100,7 +100,7 @@ const AddtoJson: React.FC<Props> = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.viewListButton}
-        onPress={() => navigation.navigate("VocabularyList")}
+        onPress={() => navigation.navigate("listword")}
       >
         <Text style={styles.viewListButtonText}>📖 Xem danh sách từ</Text>
       </TouchableOpacity>
